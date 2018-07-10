@@ -10,7 +10,7 @@ const server = http.createServer(app);
 const io = socketio.listen(server);
 
 //Controllers
-// const routes = require('./controllers/routes')
+const game_controller = require('./controllers/game_controller')
 
 
 //Models
@@ -32,7 +32,7 @@ var sockets = [];
 
 
 //Routes
-// app.get('/test', routes.test_route)
+app.get('/new_game/:width/:height/:mines', game_controller.new_game)
 
 // app.get('/get_data', routes.get_data)
 
