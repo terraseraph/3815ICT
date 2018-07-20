@@ -99,12 +99,16 @@ function mousePressed() {
       left_click()
       console.log("left-click")
     }
+    if (mouseButton === CENTER) {
+      doubleClicked()
+      console.log("middle-click")
+    }
 }
 
 function doubleClicked() {
     for (var i = 0; i < cols; i++) {
       for (var j = 0; j < rows; j++) {
-        if (grid[i][j].contains(mouseX, mouseY) && !grid[i][j].marked) {
+        if (grid[i][j].contains(mouseX, mouseY) && grid[i][j].revealed) {
           grid[i][j].revealSolved();
         }
       }
