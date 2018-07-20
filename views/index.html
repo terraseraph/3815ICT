@@ -1,39 +1,77 @@
-<!doctype html>
-<html lang="en" ng-app>
+<!DOCTYPE html>
+<html>
   <head>
-    <title>Mine Sweeper</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/minesweeper.css">
-    <link rel="stylesheet" href="/css/bootstrap-responsive.min.css">
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/minesweeper.js"></script>
+    <script type="text/javascript" src="/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/p5/lib/p5.min.js"></script>
+    <script type="text/javascript" src="/p5/lib/addons/p5.dom.min.js"></script>
+    <script type="text/javascript" src="/p5/lib/addons/p5.sound.min.js"></script>
+    <script type="text/javascript" src="/js/sketch.js"></script>
+    <script type="text/javascript" src="/js/cell.js"></script>
   </head>
   <body>
+    <div id='minesweeper'>
+      
+    </div>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.9/p5.min.js"></script>-->
+<!--    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.9/addons/p5.dom.min.js"></script>-->
+<!--    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.9/addons/p5.sound.min.js"></script>-->
+
+
+
+<!--<!doctype html>-->
+<!--<html lang="en" ng-app>-->
+<!--  <head>-->
+<!--    <title>Mine Sweeper</title>-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <link rel="stylesheet" href="/css/bootstrap.min.css">-->
+<!--    <link rel="stylesheet" href="/css/minesweeper.css">-->
+<!--    <link rel="stylesheet" href="/css/bootstrap-responsive.min.css">-->
+<!--    <script src="/js/jquery.min.js"></script>-->
+<!--    <script src="/js/minesweeper.js"></script>-->
+<!--  </head>-->
+<!--  <body>-->
     
-    <div id='game'>
-      <TABLE ID=sqTable onmouseup="return false">
-      <TR>
-        <TD CLASS=score COLSPAN=>
-      <DIV CLASS=counter ID=mines>&nbsp;</DIV>
-      <DIV CLASS=counter ID=timer>&nbsp;</DIV>
-      <IMG ID='smiley' SRC="erasing.gif" ALT="onmousedown=return" onclick='clickSmiley(event)'></TD>
-      </TR>
+<!--    <div id='game'>-->
+<!--      <TABLE ID=sqTable onmouseup="return false">-->
+<!--      <TR>-->
+<!--        <TD CLASS=score COLSPAN=>-->
+<!--      <DIV CLASS=counter ID=mines>&nbsp;</DIV>-->
+<!--      <DIV CLASS=counter ID=timer>&nbsp;</DIV>-->
+<!--      <IMG ID='smiley' SRC="erasing.gif" ALT="onmousedown=return" onclick='clickSmiley(event)'></TD>-->
+<!--      </TR>-->
       <!--foreach row........-->
-      <TR id='game_row'>
+<!--      <TR id='game_row'>-->
         <!--foreach column....-->
         <!--<TD CLASS=sq ID='' onmousedown="return clickSq(event,))"></TD>-->
         <!--end column....-->
-      </TR> 
+<!--      </TR> -->
       <!--end row....-->
-        </TABLE>
-    </div>
+<!--        </TABLE>-->
+<!--    </div>-->
     
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/angular.min.js"></script>
-  </body>
-</html>
+<!--    <script src="/socket.io/socket.io.js"></script>-->
+<!--    <script src="/js/bootstrap.min.js"></script>-->
+<!--    <script src="/js/angular.min.js"></script>-->
+<!--  </body>-->
+<!--</html>-->
 
 
 
