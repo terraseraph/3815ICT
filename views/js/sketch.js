@@ -37,8 +37,31 @@ var cols;
 var rows;
 var w = 20;
 
-var totalBees = 30;
+var totalMines = 30;
 var firstMousePress = true
+
+var totalCells
+// var revealedCount = 0
+
+// function Game(cols, rows, mines){
+//   this.totalCells = cols * rows
+//   this.revealedCount
+//   this.flagCount
+//   this.totalMines = mines
+//   this.time
+  
+//   function gameState(){
+//     if ((this.flagCount + this.totalMines + this.revealedCount) == this.totalCells){
+//       this.gameWin()
+//     }
+//   }
+  
+//   function gameWin(){
+//     console.log("won game")
+//   }
+  
+  
+// }
 
 
 function setup() {
@@ -47,13 +70,19 @@ function setup() {
   cols = floor(width / w);
   rows = floor(height / w);
   grid = make2DArray(cols, rows);
+  
+  // var game = new Game(cols, rows, totalMines)
+  totalCells = cols * rows
+  console.log(totalCells)
+  
+  //create all cells as a Cell
   for (var i = 0; i < cols; i++) {
     for (var j = 0; j < rows; j++) {
       grid[i][j] = new Cell(i, j, w);
     }
   }
 
-  // Pick totalBees spots
+  // Pick totalmines spots
   var options = [];
   for (var i = 0; i < cols; i++) {
     for (var j = 0; j < rows; j++) {
@@ -62,20 +91,20 @@ function setup() {
   }
 
 
-  for (var n = 0; n < totalBees; n++) {
+  for (var n = 0; n < totalMines; n++) {
     var index = floor(random(options.length));
     var choice = options[index];
     var i = choice[0];
     var j = choice[1];
     // Deletes that spot so it's no longer an option
     options.splice(index, 1);
-    grid[i][j].bee = true;
+    grid[i][j].mine = true;
   }
 
 
   for (var i = 0; i < cols; i++) {
     for (var j = 0; j < rows; j++) {
-      grid[i][j].countBees();
+      grid[i][j].countMines();
     }
   }
 
@@ -87,6 +116,10 @@ function gameOver() {
       grid[i][j].revealed = true;
     }
   }
+}
+
+function gameWin(){
+  console.log('WIN!')
 }
 
 
@@ -123,20 +156,20 @@ function left_click(){
       if (grid[i][j].contains(mouseX, mouseY) && !grid[i][j].marked) {
         grid[i][j].reveal();
 
-        if (grid[i][j].bee) {
+        if (grid[i][j].mine) {
   
           if (firstMousePress) {
-            grid[i][j].bee = false;
+            grid[i][j].mine = false;
 
-            //Pick a replacement bee
-            var newBee = undefined;
-            while (!newBee) {
+            //Pick a replacement mine
+            var newMine = undefined;
+            while (!newMine) {
               var c = random(cols);
               var r = random(rows);
 
-              if (!grid[c][r].bee) {
-                grid[c][r].bee = true;
-                newBee = grid[c][r];
+              if (!grid[c][r].mine) {
+                grid[c][r].mine = true;
+                newMine = grid[c][r];
               }
             }
           } else {
@@ -157,7 +190,6 @@ function right_click(){
     for (var j = 0; j < rows; j++) {
       if (grid[i][j].contains(mouseX, mouseY) && !grid[i][j].revealed) {
         grid[i][j].makeFlag();
-        // grid[i][j].reveal();
 
       }
     }
@@ -168,6 +200,13 @@ function draw() {
   background(255);
   for (var i = 0; i < cols; i++) {
     for (var j = 0; j < rows; j++) {
+      
+      //TODO: place on game class.....
+      if ((game.flagCount + totalMines + game.revealedCount) == totalCells){
+        noLoop();
+        gameWin()
+      }
+      
       grid[i][j].show();
       grid[i][j].flag();
       if (grid[i][j].gameOver){
