@@ -1,0 +1,27 @@
+.grid-container {
+  display: grid;
+  height: 100%;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas: "left-screen top-center right-screen" "left-screen game-area right-screen" "left-screen bottom-center right-screen";
+}
+
+.left-screen {
+  grid-area: left-screen;
+}
+
+.right-screen {
+  grid-area: right-screen;
+}
+
+.game-area {
+  grid-area: game-area;
+}
+
+.bottom-center {
+  grid-area: bottom-center;
+}
+
+.top-center {
+  grid-area: top-center;
+}

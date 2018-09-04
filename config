@@ -1,0 +1,8 @@
+OUTPUT_DIRECTORY = "/home/ubuntu/workspace/3815ICT/Docs"
+INPUT = "/home/ubuntu/workspace"
+RECURSIVE = YES
+FILE_PATTERNS = *.js \ 
+*.md
+EXTENSION_MAPPING = js=Javascript
+GENERATE_LATEX = NO
+EXCLUDE_PATTERNS = */node_modules/*

@@ -8,8 +8,13 @@
   "dependencies": {
     "async": "~0.2.8",
     "body-parser": "^1.18.3",
+    "bootstrap": "^4.1.2",
+    "doxygen": "^0.3.0",
+    "easytimer": "^1.1.1",
     "express": "~3.2.4",
     "jquery": "^3.3.1",
+    "jsdoc": "^3.5.5",
+    "jsonfile": "^4.0.0",
     "nodemon": "^1.18.2",
     "p5": "^0.6.1",
     "socket.io": "~0.9.14"

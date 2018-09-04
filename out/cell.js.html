@@ -1,4 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: cell.js</title>
 
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: cell.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>
 /**
  * Cell class
  * @constructor Cell
@@ -13,7 +41,7 @@ function Cell(i, j, w) {
   this.neighborCount = 0;
 
   this.mine = false;
-  // this.marked = false;
+  this.marked = false;
   this.revealed = false;
   this.isFlag = false
   this.gameOver = false
@@ -50,13 +78,13 @@ Cell.prototype.countMines = function() {
     return;
   }
   var total = 0;
-  for (var xoff = -1; xoff <= 1; xoff++) {
+  for (var xoff = -1; xoff &lt;= 1; xoff++) {
     var i = this.i + xoff;
-    if (i < 0 || i >= game.cols) continue;
+    if (i &lt; 0 || i >= game.cols) continue;
 
-    for (var yoff = -1; yoff <= 1; yoff++) {
+    for (var yoff = -1; yoff &lt;= 1; yoff++) {
       var j = this.j + yoff;
-      if (j < 0 || j >= game.rows) continue;
+      if (j &lt; 0 || j >= game.rows) continue;
 
       var neighbor = grid[i][j];
       if (neighbor.mine) {
@@ -69,7 +97,7 @@ Cell.prototype.countMines = function() {
 
 /** Checks to see if the mouse is within the cells bounds */
 Cell.prototype.contains = function(x, y) {
-  return (x > this.x && x < this.x + this.w && y > this.y && y < this.y + this.w);
+  return (x > this.x &amp;&amp; x &lt; this.x + this.w &amp;&amp; y > this.y &amp;&amp; y &lt; this.y + this.w);
 }
 
 /** reveals the cell */
@@ -82,7 +110,7 @@ Cell.prototype.reveal = function() {
   //should go in the Game class
   
   
-  if (this.mine && !this.isFlag && !game.firstMousePress){
+  if (this.mine &amp;&amp; !this.isFlag &amp;&amp; !game.firstMousePress){
     this.gameOver = true
   }
   if (this.neighborCount == 0) {
@@ -104,7 +132,7 @@ Cell.prototype.flag = function(){
 Cell.prototype.makeFlag = function(){
       if(this.isFlag == true){
         this.isFlag = false
-        // this.marked = false
+        this.marked = false
         game.flagCount -= 1
         if(this.mine){
           console.log("correct, removing flag")
@@ -117,25 +145,25 @@ Cell.prototype.makeFlag = function(){
           game.correctFlagCount += 1
         }
         this.isFlag = true
-        // this.marked = true
+        this.marked = true
         game.flagCount += 1
       }
 }
 
 /** Flood fill the surrounding solved cells */
 Cell.prototype.floodFill = function() {
-  for (var xoff = -1; xoff <= 1; xoff++) {
+  for (var xoff = -1; xoff &lt;= 1; xoff++) {
     var i = this.i + xoff;
-    if (i < 0 || i >= cols) continue;
+    if (i &lt; 0 || i >= cols) continue;
 
-    for (var yoff = -1; yoff <= 1; yoff++) {
+    for (var yoff = -1; yoff &lt;= 1; yoff++) {
       var j = this.j + yoff;
-      if (j < 0 || j >= rows) continue;
+      if (j &lt; 0 || j >= rows) continue;
 
       var neighbor = grid[i][j];
       // Note the neighbor.mine check was not required.
       // See issue #184
-      if (!neighbor.revealed && !neighbor.isFlag) {
+      if (!neighbor.revealed &amp;&amp; !neighbor.isFlag) {
         neighbor.reveal();
       }
     }
@@ -150,13 +178,13 @@ Cell.prototype.numberClick = function(){
 /** Flood fill the solved mines */
 Cell.prototype.revealSolved = function() {
   var neighbourFlags = 0
-  for (var xoff = -1; xoff <= 1; xoff++) {
+  for (var xoff = -1; xoff &lt;= 1; xoff++) {
     var i = this.i + xoff;
-    if (i < 0 || i >= cols) continue;
+    if (i &lt; 0 || i >= cols) continue;
 
-    for (var yoff = -1; yoff <= 1; yoff++) {
+    for (var yoff = -1; yoff &lt;= 1; yoff++) {
       var j = this.j + yoff;
-      if (j < 0 || j >= rows) continue;
+      if (j &lt; 0 || j >= rows) continue;
 
       var neighbor = grid[i][j];
       // Note the neighbor.mine check was not required.
@@ -169,14 +197,14 @@ Cell.prototype.revealSolved = function() {
     }
     
     ///after flag count loop
-    for (var xoff = -1; xoff <= 1; xoff++) {
+    for (var xoff = -1; xoff &lt;= 1; xoff++) {
     var i = this.i + xoff;
-    if (i < 0 || i >= cols) continue;
-      for (var yoff = -1; yoff <= 1; yoff++) {
+    if (i &lt; 0 || i >= cols) continue;
+      for (var yoff = -1; yoff &lt;= 1; yoff++) {
         var j = this.j + yoff;
-        if (j < 0 || j >= rows) continue;
+        if (j &lt; 0 || j >= rows) continue;
         var neighbor = grid[i][j];
-        if (!neighbor.revealed && neighbourFlags == this.neighborCount && !neighbor.isFlag) {
+        if (!neighbor.revealed &amp;&amp; neighbourFlags == this.neighborCount &amp;&amp; !neighbor.isFlag) {
           neighbor.reveal();
         }
       }
@@ -187,3 +215,26 @@ Cell.prototype.revealSolved = function() {
 Cell.prototype.gameOverCheck = function(){
   return this.gameOver
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Cell.html">Cell</a></li><li><a href="Game.html">Game</a></li><li><a href="Sketch.html">Sketch</a></li><li><a href="Timer.html">Timer</a></li></ul><h3>Global</h3><ul><li><a href="global.html#disableRightClickContextMenu">disableRightClickContextMenu</a></li><li><a href="global.html#doubleClicked">doubleClicked</a></li><li><a href="global.html#load_scores">load_scores</a></li><li><a href="global.html#make2DArray">make2DArray</a></li><li><a href="global.html#mousePressed">mousePressed</a></li><li><a href="global.html#new_game">new_game</a></li><li><a href="global.html#save_score">save_score</a></li><li><a href="global.html#timer_start">timer_start</a></li><li><a href="global.html#timer_stop">timer_stop</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Jul 31 2018 00:39:19 GMT+0000 (UTC)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
