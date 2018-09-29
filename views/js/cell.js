@@ -52,11 +52,11 @@ Cell.prototype.countMines = function() {
   var total = 0;
   for (var xoff = -1; xoff <= 1; xoff++) {
     var i = this.i + xoff;
-    if (i < 0 || i >= game.cols) continue;
+    if (i < 0 || i >= cols) continue;
 
     for (var yoff = -1; yoff <= 1; yoff++) {
       var j = this.j + yoff;
-      if (j < 0 || j >= game.rows) continue;
+      if (j < 0 || j >= rows) continue;
 
       var neighbor = grid[i][j];
       if (neighbor.mine) {
@@ -132,7 +132,7 @@ Cell.prototype.floodFill = function() {
       var j = this.j + yoff;
       if (j < 0 || j >= rows) continue;
 
-      var neighbor = grid[i][j];
+      var neighbor = game.grid[i][j];
       // Note the neighbor.mine check was not required.
       // See issue #184
       if (!neighbor.revealed && !neighbor.isFlag) {

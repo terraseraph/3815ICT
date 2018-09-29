@@ -8,8 +8,11 @@
     <script type="text/javascript" src="/p5/lib/p5.min.js"></script>
     <script type="text/javascript" src="/p5/lib/addons/p5.dom.min.js"></script>
     <script type="text/javascript" src="/p5/lib/addons/p5.sound.min.js"></script>
+    <!--<script type="text/javascript" src = "/js/main.js"></script>-->
     <script type="text/javascript" src="/js/timer.js"></script>
     <script type="text/javascript" src="/js/game.js"></script>
+    <script type="text/javascript" src="/js/squaremines.js"></script>
+    <script type="text/javascript" src="/js/hexmines.js"></script>
     <script type="text/javascript" src="/js/sketch.js"></script>
     <script type="text/javascript" src="/js/cell.js"></script>
     <script type="text/javascript" src="/js/test.js"></script>
@@ -19,9 +22,13 @@
     <div class="grid-container">
       <div class="left-screen">
         <div id="timer">00:00:00</div>
+        <button onclick='new_gameh(201, 201, 10)'>Easyh</button>
+        <button onclick='new_gameh(401, 401, 80)'>Mediumh</button>
+        <button onclick='new_gameh(601, 601, 150)'>Hardh</button>
         <button onclick='new_game(201, 201, 10)'>Easy</button>
         <button onclick='new_game(401, 401, 80)'>Medium</button>
         <button onclick='new_game(601, 601, 150)'>Hard</button>
+        
         <div id='scores'>
             
         </div>

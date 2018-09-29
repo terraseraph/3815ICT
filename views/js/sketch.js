@@ -1,58 +1,34 @@
 /* global $ */
-
-var game  = new Game(401, 401, 5)
+var game  = new SquareMines(401, 401, 5);
+// var game  = new Game(401, 401, 5)
 var grid;
 var cols;
 var rows;
 var w = game.cellWidth;
 
-var totalMines = 30;
+// var totalMines = 30;
 
 /**
  * Sketch
  * @constructor Sketch
  */
 function setup() {
-  var myCanvas = createCanvas(game.width, game.height);
-  myCanvas.parent("minesweeper");
   cols = game.cols
   rows = game.rows
-  w = game.cellWidth
-  grid = make2DArray(game.cols, game.rows);
+  grid = game.grid
+  game = game
+  // game  = new SquareMines(401, 401, 5);
+  console.log(game.width, game.cellWidth, game.height)
+  var myCanvas = createCanvas(game.width, game.height);
+  myCanvas.parent("minesweeper");
   
-  //create all cells as a Cell
-  for (var i = 0; i < cols; i++) {
-    for (var j = 0; j < rows; j++) {
-      grid[i][j] = new Cell(i, j, w);
-    }
+  if(game.type == "square"){
+    game.createCells()
+    game.placeMines()
   }
-
-  // Pick totalmines spots
-  var options = [];
-  for (var i = 0; i < cols; i++) {
-    for (var j = 0; j < rows; j++) {
-      options.push([i, j]);
-    }
+  else{
+    game.makeCells()
   }
-
-  //make mines in random places
-  for (var n = 0; n < game.mines; n++) {
-    var index = floor(random(options.length));
-    var choice = options[index];
-    var i = choice[0];
-    var j = choice[1];
-    // Deletes that spot so it's no longer an option
-    options.splice(index, 1);
-    grid[i][j].mine = true;
-  }
-
-
-  for (var i = 0; i < cols; i++) {
-    for (var j = 0; j < rows; j++) {
-      grid[i][j].countMines();
-    }
-  }
-  //begin drawing loop Note: this is due to the game stopping after noLoop()
   loop()
 
 }
@@ -60,17 +36,24 @@ function setup() {
 
 function draw() {
   background(255);
-  game.checkState()
-  for (var i = 0; i < cols; i++) {
-    for (var j = 0; j < rows; j++) {
+  if(game.type == "square"){
+    game.checkState();
+    game.drawSquares();
       
-      grid[i][j].show();
-      grid[i][j].flag();
-      if (grid[i][j].gameOver){
-        game.gameOver()
-      }
-    }
   }
+  else{
+    game.renderHex()
+  }
+  // for (var i = 0; i < cols; i++) {
+  //   for (var j = 0; j < rows; j++) {
+      
+  //     game.grid[i][j].show();
+  //     game.grid[i][j].flag();
+  //     if (game.grid[i][j].gameOver){
+  //       game.gameOver()
+  //     }
+  //   }
+  // }
 }
 
 //=====================================
@@ -93,11 +76,13 @@ function make2DArray(cols, rows) {
 /** Detect mouse press */
 function mousePressed() {
     if (mouseButton === RIGHT) {
-      game.right_click()
+      // game.right_click()
+      game.rightClick()
       console.log("right-click")
     }
     if (mouseButton === LEFT) {
-      game.left_click()
+      // game.left_click()
+      game.leftClick()
       console.log("left-click")
     }
     if (mouseButton === CENTER) {
@@ -109,4 +94,42 @@ function mousePressed() {
 /** Fire double click event */
 function doubleClicked() {
   game.doubleClicked()
+}
+
+
+/** Creates a new game 
+ * @param {int} w = width of field
+ * @param {int} h = height of field
+ * @param {int} m = number of mines
+ */
+function new_game(w = 301, h = 501, m = 200){
+    timer_stop()
+    // game = new Game(w, h, m)
+    game = new SquareMines(w, h, m)
+    console.log(game.firstMousePress)
+    setup()
+}
+
+function new_gameh(w = 301, h = 501, m = 200){
+    timer_stop()
+    // game = new Game(w, h, m)
+    game = new HexMines(w, h, m)
+    game.makeCells()
+    console.log(game.firstMousePress)
+    setup()
+}
+
+
+
+
+/**
+ * Disables the right click menu for the given element.
+ */
+function disableRightClickContextMenu(element) {
+  element.addEventListener('contextmenu', function(e) {
+    if (e.button == 2) {
+      // Block right-click menu thru preventing default action.
+      e.preventDefault();
+    }
+  });
 }
