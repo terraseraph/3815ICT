@@ -7,19 +7,27 @@ class HexMines {
         this.height = height
         this.mines = mines
         this.type = 'hex'
-        this.cellWidth = 10
+        this.cellWidth = 20
         this.grid = [];
         this.xOffset = 5;
         this.yOffset = 5;
-        this.cellSize = 10
+        this.cellSize = 20
         this.cols = Math.floor(this.width / this.cellWidth);
         this.rows = Math.floor(this.height / this.cellWidth);
         this.grid = this.make2DArray(this.cols, this.rows);
         // createCanvas(width, height)
-        
-                this.revealedCount = 0
+        this.revealedCount = 0
         this.flagCount = 0
         this.correctFlagCount = 0
+        
+        //edits for new hex type
+        this.map_size = 8
+        this.hex_size = 20
+        this.origin = createVector(this.width/2, this.height/2);
+        this.padding = 0
+        this.intersections = []
+        this.epsilon = this.padding + 1;
+        this.hexGrid = this.make2DArray(22,15)
     }
     
     make2DArray(cols, rows) {
@@ -30,13 +38,87 @@ class HexMines {
       return arr;
     }
     
-    makeCells(){
+    createCells(){
       for (var i = 0; i < this.cols; i++) {
         for (var j = 0; j < this.rows; j++) {
-          this.grid[i][j] = new HCell(i, j, this.cellWidth);
+          this.grid[i][j] = new Cell(i, j, this.cellWidth, true);
         }
       }
+      console.log(this.grid)
     }
+    
+    //========================new additions=======================
+    createCells_old(){
+  		// for (var q = -this.map_size; q <= this.map_size; q++) {
+  		// 		var r1 = max(-this.map_size, -q - this.map_size);
+  		// 		var r2 = min(this.map_size, -q + this.map_size);
+  		// 		for (var r = r1; r <= r2; r++) {
+  		// 			this.draw_hexagon(this.hex_to_pixel(q, r), this.hex_size, q, r);
+  		// 		}
+  		// }
+  		
+  		translate(-this.width/2 + 30, -this.height/2 + 80);
+  		 //make the grid
+  		 
+  		for (var r = 0; r < this.map_size * 2; r++) {
+  				var r_offset = floor(r/2);
+  				for (var q = -r_offset; q < (this.map_size*2) - r_offset; q++) {
+  				  this.hexGrid[r][q] = new HexCell(this.hex_size, q,r, this.map_size, this.width, this.height)
+  				}
+  		}
+ 		
+  		console.log(this.hexGrid.length)
+  		
+    // 	strokeWeight(8);
+    // 	stroke(255, 180);
+    // 	for(var i = 0; i < this.intersections.length; i++){
+    // 		point(this.intersections[i].x, this.intersections[i].y);
+    // 	}
+    // 	this.intersections = [];		
+    }
+    
+    drawHex(){
+      //same as render hex
+      for(var i = 0; i < this.hexGrid.length; i++) {
+          for(var j = 0; j < this.hexGrid[i].length;j++) {
+            // console.log(this.hexGrid[i][j])
+              if(this.hexGrid[i][j] != undefined){
+                this.hexGrid[i][j].show()
+              };
+          }
+      }      
+    }
+
+    
+    //=========end additions===============================
+    placeMines(){
+      console.log("Placing mines....")
+      // Pick totalmines spots
+      var options = [];
+      for (var i = 0; i < this.cols; i++) {
+        for (var j = 0; j < this.rows; j++) {
+          options.push([i, j]);
+        }
+      }
+    
+      //make mines in random places
+      for (var n = 0; n < this.mines; n++) {
+        var index = floor(random(options.length));
+        var choice = options[index];
+        var i = choice[0];
+        var j = choice[1];
+        // Deletes that spot so it's no longer an option
+        options.splice(index, 1);
+        this.grid[i][j].mine = true;
+      }
+    
+    
+      for (var i = 0; i < this.cols; i++) {
+        for (var j = 0; j < this.rows; j++) {
+          this.grid[i][j].countMines();
+        }
+      }
+    }    
     
     
     renderHex(){
@@ -51,9 +133,12 @@ class HexMines {
     leftClick(){
         var replaceMine = undefined;
         console.log(this.firstMousePress)
+        // console.log(this.grid[i][j].poly)
         for (var i = 0; i < this.cols; i++) {
             for (var j = 0; j < this.rows; j++) {
               if (this.grid[i][j].contains(mouseX, mouseY) && !this.grid[i][j].isFlag) {
+                  console.log(mouseX, mouseY)
+                  console.log(this.grid[i][j])
                 this.grid[i][j].reveal();
                 if (this.grid[i][j].mine) {
                   if (this.firstMousePress) {
@@ -142,22 +227,4 @@ function HCell(i, j, cellSize) {
         }
         endShape(CLOSE);
     }
-}
-/** reveals the cell */
-HCell.prototype.reveal = function() {
-  if(!this.revealed){
-    game.revealedCount += 1
-  }
-  this.revealed = true;
-  // console.log(game.correctFlagCount, game.revealedCount, game.totalCells)
-  //should go in the Game class
-  
-  
-  if (this.mine && !this.isFlag && !game.firstMousePress){
-    this.gameOver = true
-  }
-  if (this.neighborCount == 0) {
-    // flood fill time
-    this.floodFill();
-  }
 }

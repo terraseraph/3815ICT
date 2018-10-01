@@ -21,14 +21,9 @@ function setup() {
   console.log(game.width, game.cellWidth, game.height)
   var myCanvas = createCanvas(game.width, game.height);
   myCanvas.parent("minesweeper");
-  
-  if(game.type == "square"){
-    game.createCells()
-    game.placeMines()
-  }
-  else{
-    game.makeCells()
-  }
+
+  game.createCells()
+  game.placeMines()
   loop()
 
 }
@@ -42,7 +37,9 @@ function draw() {
       
   }
   else{
+    game.drawHex()
     game.renderHex()
+    // game.createCells()
   }
   // for (var i = 0; i < cols; i++) {
   //   for (var j = 0; j < rows; j++) {
@@ -114,7 +111,7 @@ function new_gameh(w = 301, h = 501, m = 200){
     timer_stop()
     // game = new Game(w, h, m)
     game = new HexMines(w, h, m)
-    game.makeCells()
+    // game.makeCells()
     console.log(game.firstMousePress)
     setup()
 }
