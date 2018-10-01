@@ -31,7 +31,7 @@ class Minesweeper{
       for (var i = 0; i < this.cols; i++) {
         for (var j = 0; j < this.rows; j++) {
           if(this.gameType == 'classic'){
-            this.grid[i][j] = new Cell(i, j, this.cellWidth);
+            this.grid[i][j] = new ClassicCell(i, j, this.cellWidth);
           }
           else if(this.gameType == 'hex'){
             this.grid[i][j] = new HexCell(i, j, this.cellWidth);

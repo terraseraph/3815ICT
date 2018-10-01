@@ -1,5 +1,5 @@
 /* global $ */
-var game  = new SquareMines(401, 401, 5);
+var game  = new Minesweeper(401, 401, 5);
 // var game  = new Game(401, 401, 5)
 var grid;
 var cols;
@@ -90,14 +90,14 @@ function doubleClicked() {
  */
 function new_game(w = 301, h = 501, m = 200){
     timer_stop()
-    game = new SquareMines(w, h, m)
+    game = new Minesweeper(w, h, m)
     console.log(game.firstMousePress)
     setup()
 }
 
 function new_gameh(w = 301, h = 501, m = 200){
     timer_stop()
-    game = new HexMines(w, h, m)
+    game = new Minesweeper(w, h, m, 'hex')
     console.log(game.firstMousePress)
     setup()
 }

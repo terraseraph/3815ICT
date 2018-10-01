@@ -22,6 +22,7 @@ class HexCell{
     
     this.revealedCount = 0
     this.flagCount = 0
+    
     this.xOffset = w / 2;
     this.yOffset = w;
     

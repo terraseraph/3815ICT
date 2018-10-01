@@ -4,7 +4,7 @@
  * Game class
  * @constructor Game
  */
-function Game(width, height, mines){
+function Game(width, height, mines, type){
   
   
 }
