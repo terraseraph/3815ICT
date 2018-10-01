@@ -33,12 +33,12 @@ function draw() {
   background(255);
   if(game.type == "square"){
     game.checkState();
-    game.drawSquares();
+    game.draw();
       
   }
   else{
-    game.renderHex()
-    // game.createCells()
+    game.draw()
+    game.checkState();
   }
 }
 
@@ -90,7 +90,6 @@ function doubleClicked() {
  */
 function new_game(w = 301, h = 501, m = 200){
     timer_stop()
-    // game = new Game(w, h, m)
     game = new SquareMines(w, h, m)
     console.log(game.firstMousePress)
     setup()
@@ -98,9 +97,7 @@ function new_game(w = 301, h = 501, m = 200){
 
 function new_gameh(w = 301, h = 501, m = 200){
     timer_stop()
-    // game = new Game(w, h, m)
     game = new HexMines(w, h, m)
-    // game.makeCells()
     console.log(game.firstMousePress)
     setup()
 }

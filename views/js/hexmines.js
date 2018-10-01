@@ -7,27 +7,18 @@ class HexMines {
         this.height = height
         this.mines = mines
         this.type = 'hex'
-        this.cellWidth = 20
+        this.cellWidth = 30
         this.grid = [];
         this.xOffset = 5;
         this.yOffset = 5;
-        this.cellSize = 20
-        this.cols = Math.floor(this.width / this.cellWidth);
-        this.rows = Math.floor(this.height / this.cellWidth);
+        this.cellSize = 30
+        this.cols = Math.floor(this.width / this.cellWidth) - 1;
+        this.rows = Math.floor(this.height / this.cellWidth) - 1;
         this.grid = this.make2DArray(this.cols, this.rows);
         // createCanvas(width, height)
         this.revealedCount = 0
         this.flagCount = 0
         this.correctFlagCount = 0
-        
-        //edits for new hex type
-        this.map_size = 8
-        this.hex_size = 20
-        this.origin = createVector(this.width/2, this.height/2);
-        this.padding = 0
-        this.intersections = []
-        this.epsilon = this.padding + 1;
-        this.hexGrid = this.make2DArray(22,15)
     }
     
     make2DArray(cols, rows) {
@@ -41,7 +32,7 @@ class HexMines {
     createCells(){
       for (var i = 0; i < this.cols; i++) {
         for (var j = 0; j < this.rows; j++) {
-          this.grid[i][j] = new Cell(i, j, this.cellWidth, true);
+          this.grid[i][j] = new HexCell(i, j, this.cellWidth);
         }
       }
       console.log(this.grid)
@@ -49,7 +40,6 @@ class HexMines {
 
     placeMines(){
       console.log("Placing mines....")
-      // Pick totalmines spots
       var options = [];
       for (var i = 0; i < this.cols; i++) {
         for (var j = 0; j < this.rows; j++) {
@@ -77,7 +67,7 @@ class HexMines {
     }    
     
     
-    renderHex(){
+    draw(){
         for(var i = 0; i < grid.length; i++) {
             for(var j = 0; j < grid[i].length;j++) {
                 grid[i][j].show();
@@ -118,13 +108,13 @@ class HexMines {
         
         
     leftClick(){
+        console.log(mouseX, mouseY)
         var replaceMine = undefined;
         console.log(this.firstMousePress)
         // console.log(this.grid[i][j].poly)
         for (var i = 0; i < this.cols; i++) {
             for (var j = 0; j < this.rows; j++) {
               if (this.grid[i][j].contains(mouseX, mouseY) && !this.grid[i][j].isFlag) {
-                  console.log(mouseX, mouseY)
                   console.log(this.grid[i][j])
                 this.grid[i][j].reveal();
                 if (this.grid[i][j].mine) {
@@ -168,7 +158,7 @@ class HexMines {
       for (var i = 0; i < this.cols; i++) {
         for (var j = 0; j < this.rows; j++) {
           if (this.grid[i][j].contains(mouseX, mouseY) && this.grid[i][j].revealed) {
-            this.grid[i][j].hexRevealSolved();
+            this.grid[i][j].revealSolved();
           }
         }
       }

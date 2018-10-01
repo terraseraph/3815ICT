@@ -1,25 +1,42 @@
-class SquareMines{
-    constructor(width, height, mines){
+class Minesweeper{
+    constructor(width, height, mines, gameType = 'classic'){
+        
+        this.cellWidth = 20
+        this.gameType = gameType
         this.width = width
         this.height = height
         this.mines = mines
-        this.cellWidth = 20
-        this.type = "square";
-        this.firstMousePress = true
+        
         this.cols = Math.floor(this.width / this.cellWidth);
         this.rows = Math.floor(this.height / this.cellWidth);
         this.totalCells = this.cols * this.rows
         this.grid = this.make2DArray(this.cols, this.rows);
+        
+        this.firstMousePress = true
         this.revealedCount = 0
         this.flagCount = 0
         this.correctFlagCount = 0
+    }
+    
+    make2DArray(cols, rows) {
+      var arr = new Array(cols);
+      for (var i = 0; i < arr.length; i++) {
+        arr[i] = new Array(rows);
+      }
+      return arr;
     }
     
     createCells(){
         console.log("Creating cells....")
       for (var i = 0; i < this.cols; i++) {
         for (var j = 0; j < this.rows; j++) {
-          this.grid[i][j] = new Cell(i, j, this.cellWidth);
+          if(this.gameType == 'classic'){
+            this.grid[i][j] = new Cell(i, j, this.cellWidth);
+          }
+          else if(this.gameType == 'hex'){
+            this.grid[i][j] = new HexCell(i, j, this.cellWidth);
+          }
+          
         }
       }
       console.log(this.grid)
@@ -27,7 +44,6 @@ class SquareMines{
     
     placeMines(){
       console.log("Placing mines....")
-      // Pick totalmines spots
       var options = [];
       for (var i = 0; i < this.cols; i++) {
         for (var j = 0; j < this.rows; j++) {
@@ -138,25 +154,16 @@ class SquareMines{
     }
     
     draw(){
-        for (var i = 0; i < this.cols; i++) {
-            for (var j = 0; j < this.rows; j++) {
-                this.grid[i][j].show();
-                this.grid[i][j].flag();
-                if (this.grid[i][j].gameOver){
+        for(var i = 0; i < grid.length; i++) {
+            for(var j = 0; j < grid[i].length;j++) {
+                grid[i][j].show();
+                grid[i][j].flag();
+                if (grid[i][j].gameOver){
                     this.gameOver()
-                }
+                }                
             }
         }
     }
-    
-    make2DArray(cols, rows) {
-      var arr = new Array(cols);
-      for (var i = 0; i < arr.length; i++) {
-        arr[i] = new Array(rows);
-      }
-      return arr;
-    }
-    
     
     
     
