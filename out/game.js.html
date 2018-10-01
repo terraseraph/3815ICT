@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: game.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: game.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* global $ */
+
+var time_now
+
+// Once the page is loaded, disable the right click menu of the canvas.
+$(document).ready(function() {
+  disableRightClickContextMenu(document.getElementById('minesweeper'));
+  load_scores()
+});
+
+/** Load the scores from file */
+function load_scores(){
+  $.get("/get_scores", function(data){
+    console.log("Scores loaded", data)
+    data = JSON.stringify(data)
+    $('#scores').html(data)
+  })
+}
+
+
+/** Save score to file */
+function save_score(){
+  // var input_name = $('#name').val()
+  var input_name = $('#name').val()
+  var time = $('#timer').text()
+  $.get(`/save_score/${input_name}/${time}`, function(dat){
+    console.log(`Saved: ${input_name} : ${time}`)
+    $('#modal-').modal("hide")
+  })
+}
+
+/**
+ * Game class
+ * @constructor Game
+ */
+function Game(width, height, mines){
+  
+  //Game states
+  this.revealedCount = 0
+  this.flagCount = 0
+  this.correctFlagCount = 0
+  
+  this.width = width
+  this.height = height
+  this.mines = mines
+  
+  //options
+  this.cellWidth = 20
+  
+  
+  this.firstMousePress = true
+  this.cols = Math.floor(this.width / this.cellWidth);
+  this.rows = Math.floor(this.height / this.cellWidth);
+  this.totalCells = this.cols * this.rows
+  
+}
+
+/** Double click to reveal solved cells */
+Game.prototype.doubleClicked = function() {
+  console.log("doubleClicked")
+  for (var i = 0; i &lt; this.cols; i++) {
+    for (var j = 0; j &lt; this.rows; j++) {
+      if (grid[i][j].contains(mouseX, mouseY) &amp;&amp; grid[i][j].revealed) {
+        grid[i][j].revealSolved();
+      }
+    }
+  }
+
+return false;
+}
+  
+/** Click to reveal a cell */
+Game.prototype.left_click = function(){
+  var replaceMine = undefined;
+  console.log(this.firstMousePress)
+  for (var i = 0; i &lt; this.cols; i++) {
+    for (var j = 0; j &lt; this.rows; j++) {
+      if (grid[i][j].contains(mouseX, mouseY) &amp;&amp; !grid[i][j].marked) {
+        grid[i][j].reveal();
+        if (grid[i][j].mine) {
+          if (this.firstMousePress) {
+            grid[i][j].mine = false;
+            //Pick a replacement mine
+            while (!replaceMine) {
+              var c = floor(random(this.cols));
+              var r = floor(random(this.rows));
+
+              if (!grid[c][r].mine) {
+                grid[c][r].mine = true;
+                replaceMine = grid[c][r];
+              }
+            }
+          } else {
+            noLoop();
+            this.gameOver();
+          }
+        }
+      }
+    }
+  }
+  if (this.firstMousePress) { timer_start(); this.firstMousePress ^= true}
+  this.firstMousePress = false;
+  
+}
+
+/** Make a flag on a cell */
+Game.prototype.right_click = function(){
+    for (var i = 0; i &lt; this.cols; i++) {
+    for (var j = 0; j &lt; this.rows; j++) {
+      if (grid[i][j].contains(mouseX, mouseY) &amp;&amp; !grid[i][j].revealed) {
+        grid[i][j].makeFlag();
+
+      }
+    }
+  }
+}
+
+/** End the game if a mine has been revealed */
+Game.prototype.gameOver = function() {
+  for (var i = 0; i &lt; this.cols; i++) {
+    for (var j = 0; j &lt; this.rows; j++) {
+      grid[i][j].revealed = true;
+    }
+  }
+  timer_stop()
+}
+
+/** Game win condition */
+Game.prototype.gameWin = function(){
+  console.log('WIN!')
+  timer_stop()
+  time_now = $('#timer').text()
+  console.log(time_now)
+  $('#your_score').html(`Your Score ${time_now}`)
+  $('#modal-').modal("show")
+}
+
+/** Checks the game state for win */
+Game.prototype.checkState = function(){
+    if ((this.correctFlagCount + this.revealedCount) == this.totalCells){
+    noLoop();
+    timer_stop()
+    this.gameWin()
+  }
+}
+
+
+  
+/** Creates a new game 
+ * @param {int} w = width of field
+ * @param {int} h = height of field
+ * @param {int} m = number of mines
+ */
+function new_game(w = 301, h = 501, m = 200){
+    timer_stop()
+    game = new Game(w, h, m)
+    console.log(game.firstMousePress)
+    setup()
+}
+
+
+
+
+/**
+ * Disables the right click menu for the given element.
+ */
+function disableRightClickContextMenu(element) {
+  element.addEventListener('contextmenu', function(e) {
+    if (e.button == 2) {
+      // Block right-click menu thru preventing default action.
+      e.preventDefault();
+    }
+  });
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Cell.html">Cell</a></li><li><a href="Game.html">Game</a></li><li><a href="Sketch.html">Sketch</a></li><li><a href="Timer.html">Timer</a></li></ul><h3>Global</h3><ul><li><a href="global.html#disableRightClickContextMenu">disableRightClickContextMenu</a></li><li><a href="global.html#doubleClicked">doubleClicked</a></li><li><a href="global.html#load_scores">load_scores</a></li><li><a href="global.html#make2DArray">make2DArray</a></li><li><a href="global.html#mousePressed">mousePressed</a></li><li><a href="global.html#new_game">new_game</a></li><li><a href="global.html#save_score">save_score</a></li><li><a href="global.html#timer_start">timer_start</a></li><li><a href="global.html#timer_stop">timer_stop</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Jul 31 2018 00:39:19 GMT+0000 (UTC)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

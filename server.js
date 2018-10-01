@@ -11,6 +11,7 @@ const io = socketio.listen(server);
 
 //Controllers
 const game_controller = require('./controllers/game_controller')
+// const doxygen = require('./controllers/doxygen')
 
 
 //Models
@@ -33,6 +34,10 @@ var sockets = [];
 
 //Routes
 app.get('/new_game/:width/:height/:mines', game_controller.new_game)
+
+app.get('/save_score/:name/:score', game_controller.save_score)
+
+app.get('/get_scores', game_controller.gc_get_scores)
 
 // app.get('/get_data', routes.get_data)
 

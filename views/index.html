@@ -2,16 +2,102 @@
 <html>
   <head>
     <script type="text/javascript" src="/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
+    <script type="text/javascript" src="/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/easytimer/dist/easytimer.min.js"></script>
     <script type="text/javascript" src="/p5/lib/p5.min.js"></script>
     <script type="text/javascript" src="/p5/lib/addons/p5.dom.min.js"></script>
     <script type="text/javascript" src="/p5/lib/addons/p5.sound.min.js"></script>
+    <!--<script type="text/javascript" src = "/js/main.js"></script>-->
+    <script type="text/javascript" src="/js/timer.js"></script>
+    <script type="text/javascript" src="/js/game.js"></script>
+    <script type="text/javascript" src="/js/squaremines.js"></script>
+    <script type="text/javascript" src="/js/hexmines.js"></script>
+    <!--<script type="text/javascript" src="/js/hexmines-test.js"></script>-->
     <script type="text/javascript" src="/js/sketch.js"></script>
     <script type="text/javascript" src="/js/cell.js"></script>
+    <script type="text/javascript" src="/js/hexCell.js"></script>
+    <script type="text/javascript" src="/js/test.js"></script>
+    <link rel="stylesheet" href="/stylesheets/style.css" type="text/css" />
   </head>
   <body>
-    <div id='minesweeper'>
-      
+    <div class="grid-container">
+      <div class="left-screen">
+        <div id="timer">00:00:00</div>
+        <button onclick="new_gameh(210, 210, 10, 'hex')">Easyh</button>
+        <button onclick="new_gameh(420, 420, 80, 'hex')">Mediumh</button>
+        <button onclick="new_gameh(610, 610, 150, 'hex')">Hardh</button>
+        <button onclick='new_game(201, 201, 10)'>Easy</button>
+        <button onclick='new_game(401, 401, 80)'>Medium</button>
+        <button onclick='new_game(601, 601, 150)'>Hard</button>
+        
+        <div id='scores'>
+            
+        </div>
+      </div>
+      <div class="right-screen">
+      </div>
+      <div class="game-area">
+      </div>
+      <div class="bottom-center">
+      </div>
+      <div class="top-center">
+          <h1>Minesweeper!</h1>
+        <div id='minesweeper'></div>
+      </div>
     </div>
+    
+    
+    <div class="container-fluid">
+    	<div class="row">
+    		<div class="col-md-12">
+    			 <!--<a id="modal-btn" href="#modal-" role="button" class="btn" data-toggle="modal">Launch demo modal</a>-->
+    			
+    			<div class="modal fade" id="modal-" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    				<div class="modal-dialog" role="document">
+    					<div class="modal-content">
+    						<div class="modal-header">
+    							<h5 class="modal-title" id="myModalLabel">
+    								Modal title
+    							</h5> 
+    							<button type="button" class="close" data-dismiss="modal">
+    								<span aria-hidden="true">×</span>
+    							</button>
+    						</div>
+    						<div class="modal-body">
+    						<div class="container-fluid">
+                                	<div class="row">
+                                		<div class="col-md-12">
+                                				<div class="form-group">
+                                					<label for="name">
+                                						Name
+                                					</label>
+                                					<input type="text" class="form-control" id="name" />
+                                				</div>
+                                		    <div id='your_score'>Your Score: </div>
+                                		</div>
+                                	</div>
+                                </div>
+    						</div>
+    						<div class="modal-footer">
+    							 
+    							<button type="button" class="btn btn-primary" onclick='save_score()'>
+    								Save
+    							</button> 
+    						</div>
+    					</div>
+    					
+    				</div>
+    				
+    			</div>
+    			
+    		</div>
+    	</div>
+    </div>
+    
+    
+    
+    
   </body>
 </html>
 
