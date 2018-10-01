@@ -8,8 +8,9 @@
     <script type="text/javascript" src="/p5/lib/p5.min.js"></script>
     <script type="text/javascript" src="/p5/lib/addons/p5.dom.min.js"></script>
     <script type="text/javascript" src="/p5/lib/addons/p5.sound.min.js"></script>
+    <script type="text/javascript" src="/js/Scores.js"></script>
     <script type="text/javascript" src="/js/timer.js"></script>
-    <script type="text/javascript" src="/js/game.js"></script>
+    <script type="text/javascript" src="/js/Game.js"></script>
     <script type="text/javascript" src="/js/MineCell.js"></script>
     <script type="text/javascript" src="/js/ClassicCell.js"></script>
     <script type="text/javascript" src="/js/HexCell.js"></script>
@@ -21,25 +22,50 @@
   <body>
     <div class="grid-container">
       <div class="left-screen">
-        <div id="timer">00:00:00</div>
-        <button onclick="new_gameh(210, 210, 10, 'hex')">Easyh</button>
-        <button onclick="new_gameh(410, 410, 30, 'hex')">Mediumh</button>
-        <button onclick="new_gameh(610, 610, 150, 'hex')">Hardh</button>
-        <button onclick='new_game(201, 201, 10)'>Easy</button>
-        <button onclick='new_game(401, 401, 80)'>Medium</button>
-        <button onclick='new_game(601, 601, 150)'>Hard</button>
         
-        <div id='scores'>
-            
-        </div>
+        <h4>Hex Minesweeper</h4>
+        <button class='btn btn-success' onclick="new_gameh(315, 315, 10, 'hex')">Easy</button>
+        <button class='btn btn-warning' onclick="new_gameh(410, 410, 30, 'hex')">Medium</button>
+        <button class='btn btn-danger' onclick="new_gameh(615, 615, 150, 'hex')">Hard</button>
+        <h4>Classic Minesweeper</h4>
+        <button class='btn btn-success' onclick='new_game(201, 201, 10)'>Easy</button>
+        <button class='btn btn-warning' onclick='new_game(401, 401, 80)'>Medium</button>
+        <button class='btn btn-danger' onclick='new_game(601, 601, 150)'>Hard</button>
+        
+
       </div>
       <div class="right-screen">
+          <div>
+    		<table class="table">
+				<thead>
+					<tr>
+						<th>
+							#ID
+						</th>
+						<th>
+							Name
+						</th>
+						<th>
+							Score
+						</th>
+						<th>
+							Game
+						</th>
+					</tr>
+				</thead>
+				<tbody id='scores'>
+				    
+				</tbody>
+			</table>
+        </div>
+          
       </div>
       <div class="game-area">
       </div>
       <div class="bottom-center">
       </div>
       <div class="top-center">
+        <h2 id="timer">00:00:00</h2>
           <h1>Minesweeper!</h1>
         <div id='minesweeper'></div>
       </div>

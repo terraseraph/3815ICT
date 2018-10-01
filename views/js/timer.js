@@ -5,23 +5,36 @@ $.getScript( "/easytimer/dist/easytimer.min.js", function( data, textStatus, jqx
  * Timer
  * @constructor Timer
  */
-var timer = new Timer();
+// var timer = new Timer();
     
+//     /** Start the timer */
+//     function timer_start(){
+//         console.log("Starting timer")
+//         timer.start();
+//     }
+    
+//     /** Stop the timer */
+//     function timer_stop(){
+//         timer.stop()
+//     }
+    
+    // /** 
+    // * @fires updates the timer value
+    // */
+    // timer.addEventListener('secondsUpdated', function (e) {
+    //     $('#timer').html(timer.getTimeValues().toString());
+    // });
+    
+    
+class GameTimer extends Timer{
     /** Start the timer */
-    function timer_start(){
+    timer_start(){
         console.log("Starting timer")
-        timer.start();
+        this.start();
     }
     
     /** Stop the timer */
-    function timer_stop(){
-        timer.stop()
+    timer_stop(){
+        this.stop()
     }
-    
-    /** 
-    * @fires updates the timer value
-    */
-    timer.addEventListener('secondsUpdated', function (e) {
-        $('#timer').html(timer.getTimeValues().toString());
-    });
-    
+}

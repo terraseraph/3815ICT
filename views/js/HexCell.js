@@ -5,14 +5,17 @@
  * 
  */
 class HexCell extends MineCell{
-  constructor(i, j, w){
+  constructor(i, j, w, grid){
     super(i,j,w)
     this.xOffset = this.w / 2;
     this.yOffset = this.w;
     
     this.textOffsetX = this.xOffset
     this.textOffsetY = this.w / 4
+    this.mineOffsetX = this.xOffset
     this.poly = []
+    this.neighbourCells = []
+    this.grid = grid
   }
   
   polygon(x, y, radius, npoints){
@@ -82,18 +85,18 @@ class HexCell extends MineCell{
      var total = 0;
      //check even and odd rows
       if(this.j % 2 == 0){
-        try{ this.neighbourCells.push(grid[this.i+1][this.j-1])}catch(e){}
-        try{ this.neighbourCells.push(grid[this.i+1][this.j+1])}catch(e){}
+        try{ this.neighbourCells.push(this.grid[this.i+1][this.j-1])}catch(e){}
+        try{ this.neighbourCells.push(this.grid[this.i+1][this.j+1])}catch(e){}
       }
       else{
-        try{ this.neighbourCells.push(grid[this.i-1][this.j-1])}catch(e){}
-        try{ this.neighbourCells.push(grid[this.i-1][this.j+1])}catch(e){}
+        try{ this.neighbourCells.push(this.grid[this.i-1][this.j-1])}catch(e){}
+        try{ this.neighbourCells.push(this.grid[this.i-1][this.j+1])}catch(e){}
       }
       
-      try{ this.neighbourCells.push(grid[this.i-1][this.j])}catch(e){}
-      try{ this.neighbourCells.push(grid[this.i+1][this.j])}catch(e){}
-      try{ this.neighbourCells.push(grid[this.i][this.j+1])}catch(e){}
-      try{ this.neighbourCells.push(grid[this.i][this.j-1])}catch(e){}
+      try{ this.neighbourCells.push(this.grid[this.i-1][this.j])}catch(e){}
+      try{ this.neighbourCells.push(this.grid[this.i+1][this.j])}catch(e){}
+      try{ this.neighbourCells.push(this.grid[this.i][this.j+1])}catch(e){}
+      try{ this.neighbourCells.push(this.grid[this.i][this.j-1])}catch(e){console.log(e)}
   
       for(var iOff = 0; iOff <= this.neighbourCells.length;iOff++){
         if (this.neighbourCells[iOff]!= undefined && this.neighbourCells[iOff].mine) {

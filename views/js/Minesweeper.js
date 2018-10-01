@@ -1,7 +1,7 @@
 class Minesweeper{
     constructor(width, height, mines, gameType = 'classic'){
         
-        this.cellWidth = 20
+        this.cellWidth = 30
         this.gameType = gameType
         this.width = width
         this.height = height
@@ -10,33 +10,39 @@ class Minesweeper{
         this.cols = Math.floor(this.width / this.cellWidth);
         this.rows = Math.floor(this.height / this.cellWidth);
         this.totalCells = this.cols * this.rows
-        this.grid = this.make2DArray(this.cols, this.rows);
         
+        
+        this.game = new Game(this.gameType)
+        this.grid = this.make2DArray(this.cols, this.rows);
         this.firstMousePress = true
         this.revealedCount = 0
         this.flagCount = 0
         this.correctFlagCount = 0
     }
     
-    make2DArray(cols, rows) {
-      var arr = new Array(cols);
-      for (var i = 0; i < arr.length; i++) {
-        arr[i] = new Array(rows);
+      
+
+    
+      make2DArray(cols, rows) {
+        var arr = new Array(cols);
+        for (var i = 0; i < arr.length; i++) {
+          arr[i] = new Array(rows);
+        }
+        return arr;
       }
-      return arr;
-    }
+
     
     createCells(){
+        // this.grid = game.grid
         console.log("Creating cells....")
       for (var i = 0; i < this.cols; i++) {
         for (var j = 0; j < this.rows; j++) {
           if(this.gameType == 'classic'){
-            this.grid[i][j] = new ClassicCell(i, j, this.cellWidth);
+            this.grid[i][j] = new ClassicCell(i, j, this.cellWidth, this.grid, this.cols, this.rows);
           }
           else if(this.gameType == 'hex'){
-            this.grid[i][j] = new HexCell(i, j, this.cellWidth);
+            try{this.grid[i][j] = new HexCell(i, j, this.cellWidth, this.grid)}catch(e){console.log(e)}
           }
-          
         }
       }
       console.log(this.grid)
@@ -100,9 +106,9 @@ class Minesweeper{
                       var c = floor(random(this.cols));
                       var r = floor(random(this.rows));
             
-                      if (!grid[c][r].mine) {
-                        grid[c][r].mine = true;
-                        replaceMine = grid[c][r];
+                      if (!this.grid[c][r].mine) {
+                        this.grid[c][r].mine = true;
+                        replaceMine = this.grid[c][r];
                       }
                     }
                   } else {
@@ -113,7 +119,7 @@ class Minesweeper{
               }
             }
         }
-        if (this.firstMousePress) { timer_start(); this.firstMousePress ^= true}
+        if (this.firstMousePress) { this.game.timer.timer_start(); this.firstMousePress ^= true}
         this.firstMousePress = false;
     }
     
@@ -130,37 +136,33 @@ class Minesweeper{
     gameOver(){
         for (var i = 0; i < this.cols; i++) {
             for (var j = 0; j < this.rows; j++) {
-                grid[i][j].revealed = true;
+                this.grid[i][j].revealed = true;
             }
         }
-        timer_stop()
+        this.game.gameOver()
     }
     
     gameWin(){
-        console.log('WIN!')
-        timer_stop()
-        time_now = $('#timer').text()
-        console.log(time_now)
-        $('#your_score').html(`Your Score ${time_now}`)
-        $('#modal-').modal("show")
+        this.game.gameWin()
     }
     
     checkState(){
         if ((this.correctFlagCount + this.revealedCount) == this.totalCells){
             noLoop();
-            timer_stop()
             this.gameWin()
         }
     }
     
     draw(){
-        for(var i = 0; i < grid.length; i++) {
-            for(var j = 0; j < grid[i].length;j++) {
-                grid[i][j].show();
-                grid[i][j].flag();
-                if (grid[i][j].gameOver){
+        for(var i = 0; i < this.grid.length; i++) {
+            for(var j = 0; j < this.grid[i].length; j++) {
+                // console.log(this.grid[i][j])
+                try{this.grid[i][j].show();}catch(e){console.log(e)}
+                try{this.grid[i][j].flag();}catch(e){console.log(e)}
+
+                if (this.grid[i][j].gameOver){
                     this.gameOver()
-                }                
+                }
             }
         }
     }

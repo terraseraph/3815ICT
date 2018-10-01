@@ -5,7 +5,7 @@
  * 
  */
 class MineCell{
-  constructor(i, j, w, type){
+  constructor(i, j, w){
     this.i = i;
     this.j = j;
     this.x = (i * w);
@@ -24,7 +24,9 @@ class MineCell{
     this.flagCount = 0
     this.textOffsetX = 0
     this.textOffsetY = 0
-    this.type = type
+    
+    this.mineOffsetX = 0
+    this.mineOffsetY = 0
   }
   
     /** Renders the minefield every frame. */
@@ -35,7 +37,7 @@ class MineCell{
         if (this.revealed) {
             if (this.mine) {
                 fill(127);
-                ellipse(this.x + this.textOffsetX, this.y, this.w * 0.5);
+                ellipse(this.x + this.mineOffsetX, this.y + this.mineOffsetY, this.w * 0.5);
             } 
             else {
                 fill(200);
@@ -53,6 +55,7 @@ class MineCell{
   reveal() {
     if(!this.revealed){
       game.revealedCount += 1
+      console.log(this.neighbourCells)
     }
     this.revealed = true;
     
