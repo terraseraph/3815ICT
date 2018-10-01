@@ -141,8 +141,12 @@ Cell.prototype.reveal = function() {
     this.gameOver = true
   }
   if (this.neighborCount == 0) {
-    // flood fill time
-    this.floodFill();
+    if(this.hex){
+      this.hexFloodFill()
+    }
+    else{
+      this.floodFill();
+    }
   }
 }
 
@@ -151,7 +155,8 @@ Cell.prototype.flag = function(){
   if(this.isFlag){
         stroke(0);
         fill('red');
-        rect(this.x, this.y, this.w, this.w);
+        this.makeShape()
+          // rect(this.x, this.y, this.w, this.w);
   }
 }
 
@@ -176,17 +181,6 @@ Cell.prototype.makeFlag = function(){
         game.flagCount += 1
       }
 }
-
-
-
-  var hexNeighbours = [
-    [this.i-1, this.j-1],
-    [this.i+1, this.j-1],
-    [this.i-1, this.j],
-    [this.i+1, this.j],
-    [this.i, this.j+1],
-    [this.i+1, this.j+1]
-    ];
 
 Cell.prototype.hexCountMines = function(){
    var total = 0;
@@ -250,9 +244,6 @@ Cell.prototype.countMines = function() {
 /** Flood fill the surrounding solved cells */
 Cell.prototype.floodFill = function() {
   for (var xoff = -1; xoff <= 1;xoff++) {
-    if(this.hex){
-      // if(xoff == 1) xoff++
-    }
 
     var i = this.i + xoff;
     if (i < 0 || i >= cols) continue;
@@ -261,7 +252,7 @@ Cell.prototype.floodFill = function() {
       var j = this.j + yoff;
       if (j < 0 || j >= rows) continue;
 
-      var neighbor = game.grid[i][j];
+      var neighbor = grid[i][j];
       if (!neighbor.revealed && !neighbor.isFlag) {
         neighbor.reveal();
       }
@@ -270,14 +261,25 @@ Cell.prototype.floodFill = function() {
   // this.sqLoop('floodFill')
 }
 
+Cell.prototype.hexFloodFill = function(){
+  for(var i = 0; i < this.neighbourCells.length; i++){
+    var neighbor = this.neighbourCells[i];
+    if(neighbor != undefined){
+      if (!neighbor.revealed && !neighbor.isFlag) {
+        console.log(neighbor)
+        neighbor.reveal();
+      }
+    }
+  } 
+}
 
 /** Flood fill the solved mines */
 Cell.prototype.revealSolved = function() {
   var neighbourFlags = 0
   for (var xoff = -1; xoff <= 1; xoff++) {
-    if(this.hex){
-      if(xoff == 1) xoff++
-    }    
+    // if(this.hex){
+    //   if(xoff == 1) xoff++
+    // }    
     var i = this.i + xoff;
     if (i < 0 || i >= cols) continue;
 
@@ -296,9 +298,6 @@ Cell.prototype.revealSolved = function() {
     // this.sqLoop('revealSolved')
     ///after flag count loop
     for (var xoff = -1; xoff <= 1;xoff++ ) {
-      if(this.hex){
-        if(xoff == 1) xoff++
-      }      
     var i = this.i + xoff;
     if (i < 0 || i >= cols) continue;
       for (var yoff = -1; yoff <= 1; yoff++) {
@@ -311,6 +310,28 @@ Cell.prototype.revealSolved = function() {
       }
     }
     // this.sqLoop('afterFlag')    
+}
+
+
+Cell.prototype.hexRevealSolved = function(){
+  var neighbourFlags = 0  
+  for(var i = 0; i < this.neighbourCells.length; i++){
+    var neighbor = this.neighbourCells[i];
+    if(neighbor != undefined){
+      if(neighbor.isFlag){
+          neighbourFlags += 1
+      }
+    }
+  }
+  for(var i = 0; i < this.neighbourCells.length; i++){
+    var neighbor = this.neighbourCells[i];
+    if(neighbor != undefined){
+      if (!neighbor.revealed && neighbourFlags == this.neighborCount && !neighbor.isFlag) {
+        neighbor.reveal();
+      }
+    }
+  }
+  
 }
 
 /** Check to see if a mine has been revealed */

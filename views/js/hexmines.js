@@ -46,51 +46,7 @@ class HexMines {
       }
       console.log(this.grid)
     }
-    
-    //========================new additions=======================
-    createCells_old(){
-  		// for (var q = -this.map_size; q <= this.map_size; q++) {
-  		// 		var r1 = max(-this.map_size, -q - this.map_size);
-  		// 		var r2 = min(this.map_size, -q + this.map_size);
-  		// 		for (var r = r1; r <= r2; r++) {
-  		// 			this.draw_hexagon(this.hex_to_pixel(q, r), this.hex_size, q, r);
-  		// 		}
-  		// }
-  		
-  		translate(-this.width/2 + 30, -this.height/2 + 80);
-  		 //make the grid
-  		 
-  		for (var r = 0; r < this.map_size * 2; r++) {
-  				var r_offset = floor(r/2);
-  				for (var q = -r_offset; q < (this.map_size*2) - r_offset; q++) {
-  				  this.hexGrid[r][q] = new HexCell(this.hex_size, q,r, this.map_size, this.width, this.height)
-  				}
-  		}
- 		
-  		console.log(this.hexGrid.length)
-  		
-    // 	strokeWeight(8);
-    // 	stroke(255, 180);
-    // 	for(var i = 0; i < this.intersections.length; i++){
-    // 		point(this.intersections[i].x, this.intersections[i].y);
-    // 	}
-    // 	this.intersections = [];		
-    }
-    
-    drawHex(){
-      //same as render hex
-      for(var i = 0; i < this.hexGrid.length; i++) {
-          for(var j = 0; j < this.hexGrid[i].length;j++) {
-            // console.log(this.hexGrid[i][j])
-              if(this.hexGrid[i][j] != undefined){
-                this.hexGrid[i][j].show()
-              };
-          }
-      }      
-    }
 
-    
-    //=========end additions===============================
     placeMines(){
       console.log("Placing mines....")
       // Pick totalmines spots
@@ -125,9 +81,40 @@ class HexMines {
         for(var i = 0; i < grid.length; i++) {
             for(var j = 0; j < grid[i].length;j++) {
                 grid[i][j].show();
+                grid[i][j].flag();
+                if (grid[i][j].gameOver){
+                    this.gameOver()
+                }                
             }
         }
     }
+    
+    
+    gameOver(){
+        for (var i = 0; i < this.cols; i++) {
+            for (var j = 0; j < this.rows; j++) {
+                grid[i][j].revealed = true;
+            }
+        }
+        timer_stop()
+    }
+    
+    gameWin(){
+        console.log('WIN!')
+        timer_stop()
+        time_now = $('#timer').text()
+        console.log(time_now)
+        $('#your_score').html(`Your Score ${time_now}`)
+        $('#modal-').modal("show")
+    }
+    
+    checkState(){
+        if ((this.correctFlagCount + this.revealedCount) == this.totalCells){
+            noLoop();
+            timer_stop()
+            this.gameWin()
+        }
+    }    
         
         
     leftClick(){
@@ -175,56 +162,70 @@ class HexMines {
         }
     }
     
-    
-}
-
-//REFACTOR THIS GARBAGE
-function HCell(i, j, cellSize) {
-    this.i = i;
-    this.j = j;
-    this.xOffset = 5;
-    this.yOffset = 5;
-    this.mine = false;
-    // this.marked = false;
-    this.revealed = false;
-    this.isFlag = false
-    this.gameOver = false
-    
-    this.revealedCount = 0
-    this.flagCount = 0    
-
-    if(j % 2 === 0) {
-        this.x = this.i * cellSize * 2 + this.xOffset;
-    } else {
-        this.x = this.i * cellSize * 2 + cellSize + this.xOffset;
-    }
-    
-    this.y = this.j * cellSize * 1.7 + this.yOffset;
-    this.hasPlayer = false;
-
-    this.show = function () {
-        stroke(255, 255, 255, 50)
-        fill(0, 114, 183);
- 
-        push(); 
-        translate(this.x, this.y);
-        rotate(radians(30));
-        this.polygon(0, 0, cellSize, 6);
-        pop();
-    }
-    /** Checks to see if the mouse is within the cells bounds */
-    this.contains = function(x, y) {
-      return (x > this.x && x < this.x + this.w && y > this.y && y < this.y + this.w);
-    }
-    
-    this.polygon = function(x, y, radius, npoints){
-        var angle = TWO_PI / npoints;
-        beginShape();
-        for (var a = 0; a < TWO_PI; a += angle) {
-            var sx = x + cos(a) * radius;
-            var sy = y + sin(a) * radius;
-            vertex(sx, sy);
+    /** Double click to reveal solved cells */
+    doubleClicked() {
+      console.log("doubleClicked")
+      for (var i = 0; i < this.cols; i++) {
+        for (var j = 0; j < this.rows; j++) {
+          if (this.grid[i][j].contains(mouseX, mouseY) && this.grid[i][j].revealed) {
+            this.grid[i][j].hexRevealSolved();
+          }
         }
-        endShape(CLOSE);
-    }
+      }
+    
+    return false;
+    }    
+    
+    
 }
+
+// //REFACTOR THIS GARBAGE
+// function HCell(i, j, cellSize) {
+//     this.i = i;
+//     this.j = j;
+//     this.xOffset = 5;
+//     this.yOffset = 5;
+//     this.mine = false;
+//     // this.marked = false;
+//     this.revealed = false;
+//     this.isFlag = false
+//     this.gameOver = false
+    
+//     this.revealedCount = 0
+//     this.flagCount = 0    
+
+//     if(j % 2 === 0) {
+//         this.x = this.i * cellSize * 2 + this.xOffset;
+//     } else {
+//         this.x = this.i * cellSize * 2 + cellSize + this.xOffset;
+//     }
+    
+//     this.y = this.j * cellSize * 1.7 + this.yOffset;
+//     this.hasPlayer = false;
+
+//     this.show = function () {
+//         stroke(255, 255, 255, 50)
+//         fill(0, 114, 183);
+ 
+//         push(); 
+//         translate(this.x, this.y);
+//         rotate(radians(30));
+//         this.polygon(0, 0, cellSize, 6);
+//         pop();
+//     }
+//     /** Checks to see if the mouse is within the cells bounds */
+//     this.contains = function(x, y) {
+//       return (x > this.x && x < this.x + this.w && y > this.y && y < this.y + this.w);
+//     }
+    
+//     this.polygon = function(x, y, radius, npoints){
+//         var angle = TWO_PI / npoints;
+//         beginShape();
+//         for (var a = 0; a < TWO_PI; a += angle) {
+//             var sx = x + cos(a) * radius;
+//             var sy = y + sin(a) * radius;
+//             vertex(sx, sy);
+//         }
+//         endShape(CLOSE);
+//     }
+// }

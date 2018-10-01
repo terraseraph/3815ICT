@@ -37,20 +37,9 @@ function draw() {
       
   }
   else{
-    game.drawHex()
     game.renderHex()
     // game.createCells()
   }
-  // for (var i = 0; i < cols; i++) {
-  //   for (var j = 0; j < rows; j++) {
-      
-  //     game.grid[i][j].show();
-  //     game.grid[i][j].flag();
-  //     if (game.grid[i][j].gameOver){
-  //       game.gameOver()
-  //     }
-  //   }
-  // }
 }
 
 //=====================================
