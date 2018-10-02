@@ -32,7 +32,7 @@ class Game{
   
   
   /** Game win condition */
-  gameWin(){
+  gameWin(cb){
     this.timer.timer_stop()
     console.log('WIN!')
     this.timer.timer_stop()
@@ -40,11 +40,16 @@ class Game{
     console.log(this.time_now)
     $('#your_score').html(`Your Score ${this.time_now}`)
     $('#modal-').modal("show")
+    cb('game won')
   }
   
-  gameOver(){
+  gameOver(cb){
     this.timer.timer_stop()
+    cb("game over")
   }
 
 }
 
+
+
+module.exports = class Game{}

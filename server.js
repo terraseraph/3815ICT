@@ -39,6 +39,10 @@ app.get('/save_score/:name/:score/:gameName', game_controller.save_score)
 
 app.get('/get_scores/:gameName', game_controller.gc_get_scores)
 
+app.get('/test', function(req, res){
+   res.sendfile(path.resolve(__dirname, 'views/js/tests/index.html'));
+})
+
 // app.get('/get_data', routes.get_data)
 
 // app.post('/login', routes.send_login)

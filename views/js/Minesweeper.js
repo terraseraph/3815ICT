@@ -45,7 +45,7 @@ class Minesweeper{
           }
         }
       }
-      console.log(this.grid)
+      return this.grid
     }
     
     placeMines(){
@@ -139,11 +139,11 @@ class Minesweeper{
                 this.grid[i][j].revealed = true;
             }
         }
-        this.game.gameOver()
+        this.game.gameOver(console.log)
     }
     
     gameWin(){
-        this.game.gameWin()
+        this.game.gameWin(console.log)
     }
     
     checkState(){

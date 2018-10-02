@@ -5,7 +5,7 @@ class Scores{
     
     
   /** Load the scores from file */
-  load_scores(gameName = 'classic'){
+  load_scores(gameName = 'classic', cb){
     $.get("/get_scores/"+gameName, function(data){
       console.log("Scores loaded", data)
     //   data = JSON.stringify(data)
@@ -24,8 +24,9 @@ class Scores{
             <tr>
           `)
         $('#scores').append(table)
-          
+        
       }
+      cb(dat)
     })
   }
   
@@ -33,7 +34,13 @@ class Scores{
   /** Save score to file */
   save_score(input_name, time, gameName, cb){
     $.get(`/save_score/${input_name}/${time}/${gameName}`, function(dat){
-      cb(`Saved: ${input_name} : ${time}, ${gameName}`)
+      // cb(`Saved: ${input_name} : ${time}, ${gameName}`)
+      cb({
+        success : true,
+        name : input_name,
+        time : time,
+        gameName : gameName
+      })
       var id = this.id + 1
         var table = (`<tr>
             <td>--</td>

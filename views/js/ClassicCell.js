@@ -54,3 +54,5 @@ class ClassicCell extends MineCell {
   }
 
 }
+
+module.exports = class ClassicCell{}
