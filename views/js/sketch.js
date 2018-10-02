@@ -72,6 +72,12 @@ function new_gameh(w = 301, h = 501, m = 200){
     setup()
 }
 
+function new_gameC(w = 301, h = 501, m = 200){
+    game.game.timer.timer_stop()
+    game = new Minesweeper(w, h, m, 'colouring')
+    setup()
+}
+
 function save_score(){
   game.game.save_score()
 }

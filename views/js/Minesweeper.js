@@ -18,6 +18,7 @@ class Minesweeper{
         this.revealedCount = 0
         this.flagCount = 0
         this.correctFlagCount = 0
+        this.colourArray = ["#FF0000", "#F7FF00", "#00FF08", "#00E0FF", "#000000"]
     }
     
       
@@ -43,6 +44,9 @@ class Minesweeper{
           else if(this.gameType == 'hex'){
             try{this.grid[i][j] = new HexCell(i, j, this.cellWidth, this.grid)}catch(e){console.log(e)}
           }
+          else if(this.gameType == 'colouring'){
+            try{this.grid[i][j] = new ColourCell(i, j, this.cellWidth, this.grid)}catch(e){}
+          }
         }
       }
       return this.grid
@@ -56,6 +60,18 @@ class Minesweeper{
           options.push([i, j]);
         }
       }
+      
+      if(this.gameType == 'colouring'){
+        for (var i = 0; i < this.cols; i++) {
+          for (var j = 0; j < this.rows; j++) {
+            var num = int(random(0, 5));
+            var colour = this.colourArray[num]
+            this.grid[i][j].colour = colour
+            this.grid[i][j].countMines();
+          }
+        }
+        return
+      }
     
       //make mines in random places
       for (var n = 0; n < this.mines; n++) {
@@ -66,6 +82,7 @@ class Minesweeper{
         // Deletes that spot so it's no longer an option
         options.splice(index, 1);
         this.grid[i][j].mine = true;
+        
       }
     
     
@@ -92,6 +109,16 @@ class Minesweeper{
     
     
     leftClick(){
+      if(this.gameType == 'colouring'){
+          for (var i = 0; i < this.cols; i++) {
+            for (var j = 0; j < this.rows; j++) {
+              if (this.grid[i][j].contains(mouseX, mouseY)) {
+                this.grid[i][j].reveal();
+                console.log(this.grid[i][j].colour)
+              }
+            }
+          }
+      }
         var replaceMine = undefined;
         console.log(this.firstMousePress)
         for (var i = 0; i < this.cols; i++) {
@@ -122,6 +149,7 @@ class Minesweeper{
         if (this.firstMousePress) { this.game.timer.timer_start(); this.firstMousePress ^= true}
         this.firstMousePress = false;
     }
+    
     
     rightClick(){
         for (var i = 0; i < this.cols; i++) {
@@ -157,7 +185,7 @@ class Minesweeper{
         for(var i = 0; i < this.grid.length; i++) {
             for(var j = 0; j < this.grid[i].length; j++) {
                 // console.log(this.grid[i][j])
-                try{this.grid[i][j].show();}catch(e){console.log(e)}
+                try{this.grid[i][j].show();}catch(e){}
                 try{this.grid[i][j].flag();}catch(e){console.log(e)}
 
                 if (this.grid[i][j].gameOver){
