@@ -1,7 +1,7 @@
 
 /**
- * ClassicCell class
- * @constructor ClassicCell
+ * ColourCell class Extends MineCell
+ * @constructor ColourCell
  * 
  */
 class ColourCell extends MineCell {
@@ -18,6 +18,7 @@ class ColourCell extends MineCell {
     this.colour;
   }
 
+  /** Makes the cell shape */
   makeShape(){
         rect(this.x, this.y, this.w, this.w);
     }
@@ -51,6 +52,7 @@ class ColourCell extends MineCell {
       }
   }
   
+  /** Reveal the coloured cell */
   reveal(){
       this.revealed = true;
         console.log(this.neighbourCells)
@@ -61,14 +63,17 @@ class ColourCell extends MineCell {
     }
   }
   
+  /** Override the make flag */
   makeFlag(){
     return
   }
   
+  /** Override floodfill */
   floodFill(){
     return
   }
   
+  /** Override revealSolved */
   revealSolved(){
     return
   }

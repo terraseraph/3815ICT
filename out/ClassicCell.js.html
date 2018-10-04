@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: timer.js</title>
+    <title>JSDoc: Source: ClassicCell.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: timer.js</h1>
+    <h1 class="page-title">Source: ClassicCell.js</h1>
 
     
 
@@ -26,25 +26,64 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>$.getScript( "/easytimer/dist/easytimer.min.js", function( data, textStatus, jqxhr ) {
-});
-
+            <pre class="prettyprint source linenums"><code>
 /**
- * GameTimer
- * @constructor GameTimer
+ * ClassicCell class Extends MineCell
+ * @constructor ClassicCell
+ * 
  */
-class GameTimer extends Timer{
-    /** Start the timer */
-    timer_start(){
-        console.log("Starting timer")
-        this.start();
+class ClassicCell extends MineCell {
+  constructor(i, j, w, grid, cols, rows){
+    super(i,j,w)
+    this.textOffsetX = (this.w * 0.5 )
+    this.textOffsetY = (this.w - 6)
+    this.mineOffsetY = this.w * 0.5
+    this.mineOffsetX = this.w * 0.5
+    this.cols = cols
+    this.rows = rows
+    this.grid = grid
+  }
+
+  /** Creates the square shaped cells */
+  makeShape(){
+        rect(this.x, this.y, this.w, this.w);
     }
-    
-    /** Stop the timer */
-    timer_stop(){
-        this.stop()
+
+  
+  /** Checks to see if the mouse is within the cells bounds */
+  contains(x, y) {
+    return (x > this.x &amp;&amp; x &lt; this.x + this.w &amp;&amp; y > this.y &amp;&amp; y &lt; this.y + this.w);
+  }
+
+  
+  /** Count the neighbouring mines */
+  countMines() {
+    if (this.mine) {
+      this.neighborCount = 1;
+      return;
     }
-}</code></pre>
+  
+    var total = 0;
+    for (var xoff = -1; xoff &lt;= 1;xoff++ ) {
+      var i = this.i + xoff;
+      if (i &lt; 0 || i >= this.cols) continue;
+  
+      for (var yoff = -1; yoff &lt;= 1; yoff++) {
+        var j = this.j + yoff;
+        if (j &lt; 0 || j >= this.rows) continue;
+  // 
+        var neighbor = this.grid[i][j];
+        this.neighbourCells.push(neighbor)
+        if (neighbor.mine) {
+          total++;
+        }
+      }
+    }
+    this.neighborCount = total;
+  }
+
+}
+</code></pre>
         </article>
     </section>
 

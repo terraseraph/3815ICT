@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Game</title>
+    <title>JSDoc: Class: HexCell</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: Game</h1>
+    <h1 class="page-title">Class: HexCell</h1>
 
     
 
@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Game<span class="signature">()</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>HexCell<span class="signature">()</span><span class="type-signature"></span></h2>
         
     
 </header>
@@ -41,7 +41,7 @@
     
 
     
-    <h4 class="name" id="Game"><span class="type-signature"></span>new Game<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="HexCell"><span class="type-signature"></span>new HexCell<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -49,7 +49,7 @@
 
 
 <div class="description">
-    Game class
+    HexCell class Extends MineCell
 </div>
 
 
@@ -93,7 +93,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Game.js.html">Game.js</a>, <a href="Game.js.html#line3">line 3</a>
+        <a href="HexCell.js.html">HexCell.js</a>, <a href="HexCell.js.html#line2">line 2</a>
     </li></ul></dd>
     
 
@@ -147,7 +147,7 @@
     
 
     
-    <h4 class="name" id="gameWin"><span class="type-signature"></span>gameWin<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="contains"><span class="type-signature"></span>contains<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -155,7 +155,7 @@
 
 
 <div class="description">
-    Game win condition
+    Checks to see if the mouse is within the cells bounds
 </div>
 
 
@@ -199,7 +199,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Game.js.html">Game.js</a>, <a href="Game.js.html#line36">line 36</a>
+        <a href="HexCell.js.html">HexCell.js</a>, <a href="HexCell.js.html#line66">line 66</a>
     </li></ul></dd>
     
 
@@ -233,7 +233,7 @@
     
 
     
-    <h4 class="name" id="load_scores"><span class="type-signature"></span>load_scores<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="countMines"><span class="type-signature"></span>countMines<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -241,7 +241,7 @@
 
 
 <div class="description">
-    Load the scores from file
+    Counts the neighbour mines
 </div>
 
 
@@ -285,7 +285,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Game.js.html">Game.js</a>, <a href="Game.js.html#line18">line 18</a>
+        <a href="HexCell.js.html">HexCell.js</a>, <a href="HexCell.js.html#line87">line 87</a>
     </li></ul></dd>
     
 
@@ -319,7 +319,7 @@
     
 
     
-    <h4 class="name" id="save_score"><span class="type-signature"></span>save_score<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="generatePoints"><span class="type-signature"></span>generatePoints<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -327,7 +327,7 @@
 
 
 <div class="description">
-    Save score to file
+    Generate the 6 x,y points for the hexagon
 </div>
 
 
@@ -371,7 +371,179 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Game.js.html">Game.js</a>, <a href="Game.js.html#line24">line 24</a>
+        <a href="HexCell.js.html">HexCell.js</a>, <a href="HexCell.js.html#line33">line 33</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="inside"><span class="type-signature"></span>inside<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Algorithm for checking inside polygon
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="HexCell.js.html">HexCell.js</a>, <a href="HexCell.js.html#line71">line 71</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="makeShape"><span class="type-signature"></span>makeShape<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Make the hexagon shape
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="HexCell.js.html">HexCell.js</a>, <a href="HexCell.js.html#line54">line 54</a>
     </li></ul></dd>
     
 

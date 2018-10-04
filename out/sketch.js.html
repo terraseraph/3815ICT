@@ -27,60 +27,27 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/* global $ */
-
-var game  = new Game(401, 401, 5)
-var grid;
-var cols;
-var rows;
-var w = game.cellWidth;
-
-var totalMines = 30;
+//Initialise the game
+var game = new Minesweeper(401, 401, 5);
 
 /**
  * Sketch
  * @constructor Sketch
  */
 function setup() {
-  var myCanvas = createCanvas(game.width, game.height);
-  myCanvas.parent("minesweeper");
-  cols = game.cols
-  rows = game.rows
-  w = game.cellWidth
-  grid = make2DArray(game.cols, game.rows);
   
-  //create all cells as a Cell
-  for (var i = 0; i &lt; cols; i++) {
-    for (var j = 0; j &lt; rows; j++) {
-      grid[i][j] = new Cell(i, j, w);
-    }
-  }
+  /** 
+  * @fires updates the timer value
+  */
+  game.game.timer.addEventListener('secondsUpdated', function (e) {
+      $('#timer').html(game.game.timer.getTimeValues().toString());
+  });  
+  
+  var Canvas = createCanvas(game.width, game.height);
+  Canvas.parent("minesweeper");
 
-  // Pick totalmines spots
-  var options = [];
-  for (var i = 0; i &lt; cols; i++) {
-    for (var j = 0; j &lt; rows; j++) {
-      options.push([i, j]);
-    }
-  }
-
-  //make mines in random places
-  for (var n = 0; n &lt; game.mines; n++) {
-    var index = floor(random(options.length));
-    var choice = options[index];
-    var i = choice[0];
-    var j = choice[1];
-    // Deletes that spot so it's no longer an option
-    options.splice(index, 1);
-    grid[i][j].mine = true;
-  }
-
-
-  for (var i = 0; i &lt; cols; i++) {
-    for (var j = 0; j &lt; rows; j++) {
-      grid[i][j].countMines();
-    }
-  }
-  //begin drawing loop Note: this is due to the game stopping after noLoop()
+  game.createCells()
+  game.placeMines()
   loop()
 
 }
@@ -88,48 +55,24 @@ function setup() {
 
 function draw() {
   background(255);
-  game.checkState()
-  for (var i = 0; i &lt; cols; i++) {
-    for (var j = 0; j &lt; rows; j++) {
-      
-      grid[i][j].show();
-      grid[i][j].flag();
-      if (grid[i][j].gameOver){
-        game.gameOver()
-      }
-    }
-  }
+  game.checkState();
+  game.draw();
 }
 
 //=====================================
 //Other functions
 //=====================================
-
-/** Make a 2d array for the cells
- * @param {int} cols = number of columns
- * @param {int} rows = number of rows
- */
-function make2DArray(cols, rows) {
-  var arr = new Array(cols);
-  for (var i = 0; i &lt; arr.length; i++) {
-    arr[i] = new Array(rows);
-  }
-  return arr;
-}
-
-
 /** Detect mouse press */
 function mousePressed() {
     if (mouseButton === RIGHT) {
-      game.right_click()
+      game.rightClick()
       console.log("right-click")
     }
     if (mouseButton === LEFT) {
-      game.left_click()
+      game.leftClick()
       console.log("left-click")
     }
     if (mouseButton === CENTER) {
-      game.doubleClicked()
       console.log("middle-click")
     }
 }
@@ -137,6 +80,55 @@ function mousePressed() {
 /** Fire double click event */
 function doubleClicked() {
   game.doubleClicked()
+}
+
+
+/** Creates a new game 
+ * @param {int} w = width of field
+ * @param {int} h = height of field
+ * @param {int} m = number of mines
+ */
+function new_game(w = 301, h = 501, m = 200){
+    game.game.timer.timer_stop()
+    game = new Minesweeper(w, h, m, 'classic')
+    setup()
+}
+
+function new_gameh(w = 301, h = 501, m = 200){
+    game.game.timer.timer_stop()
+    game = new Minesweeper(w, h, m, 'hex')
+    setup()
+}
+
+function new_gameC(w = 301, h = 501, m = 200){
+    game.game.timer.timer_stop()
+    game = new Minesweeper(w, h, m, 'colouring')
+    setup()
+}
+
+function save_score(){
+  game.game.save_score()
+}
+
+
+
+
+/**
+ * Disables the right click menu for the given element.
+ */
+$(document).ready(function() {
+  disableRightClickContextMenu(document.getElementById('minesweeper'));
+  game.game.load_scores()
+});
+
+
+// Once the page is loaded, disable the right click menu of the canvas.
+function disableRightClickContextMenu(element) {
+  element.addEventListener('contextmenu', function(e) {
+    if (e.button == 2) {
+      e.preventDefault();
+    }
+  });
 }</code></pre>
         </article>
     </section>
@@ -147,13 +139,13 @@ function doubleClicked() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Cell.html">Cell</a></li><li><a href="Game.html">Game</a></li><li><a href="Sketch.html">Sketch</a></li><li><a href="Timer.html">Timer</a></li></ul><h3>Global</h3><ul><li><a href="global.html#disableRightClickContextMenu">disableRightClickContextMenu</a></li><li><a href="global.html#doubleClicked">doubleClicked</a></li><li><a href="global.html#load_scores">load_scores</a></li><li><a href="global.html#make2DArray">make2DArray</a></li><li><a href="global.html#mousePressed">mousePressed</a></li><li><a href="global.html#new_game">new_game</a></li><li><a href="global.html#save_score">save_score</a></li><li><a href="global.html#timer_start">timer_start</a></li><li><a href="global.html#timer_stop">timer_stop</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ClassicCell.html">ClassicCell</a></li><li><a href="ColourCell.html">ColourCell</a></li><li><a href="Game.html">Game</a></li><li><a href="GameTimer.html">GameTimer</a></li><li><a href="HexCell.html">HexCell</a></li><li><a href="MineCell.html">MineCell</a></li><li><a href="Minesweeper.html">Minesweeper</a></li><li><a href="Scores.html">Scores</a></li><li><a href="Sketch.html">Sketch</a></li></ul><h3>Global</h3><ul><li><a href="global.html#doubleClicked">doubleClicked</a></li><li><a href="global.html#mousePressed">mousePressed</a></li><li><a href="global.html#new_game">new_game</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Jul 31 2018 00:39:19 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Oct 04 2018 07:41:32 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -1,6 +1,6 @@
 
 /**
- * ClassicCell class
+ * ClassicCell class Extends MineCell
  * @constructor ClassicCell
  * 
  */
@@ -55,5 +55,3 @@ class ClassicCell extends MineCell {
   }
 
 }
-
-module.exports = class ClassicCell{}

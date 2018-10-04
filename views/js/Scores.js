@@ -1,3 +1,8 @@
+/**
+ * Scores class
+ * @constructor Scores
+ * 
+ */
 class Scores{
     constructor(){
         this.id

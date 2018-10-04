@@ -3,6 +3,7 @@
 /**
  * Game class
  * @constructor Game
+ * 
  */
 class Game{
   constructor(gameName){
