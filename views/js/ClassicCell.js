@@ -16,6 +16,7 @@ class ClassicCell extends MineCell {
     this.grid = grid
   }
 
+  /** Creates the square shaped cells */
   makeShape(){
         rect(this.x, this.y, this.w, this.w);
     }

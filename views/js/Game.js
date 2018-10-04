@@ -49,7 +49,3 @@ class Game{
   }
 
 }
-
-
-
-module.exports = class Game{}
