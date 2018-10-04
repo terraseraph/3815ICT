@@ -6,11 +6,13 @@ var jsonfile = require('jsonfile')
 var file = __dirname+"/game_scores.json"
 var scores;
 var game;
+var gameName
 
 get_scores(console.log)
 
 
 exports.gc_get_scores = function(req, res){
+    gameName = req.params.gameName
     get_scores(function(data){
         res.send(data)
     })
@@ -21,12 +23,14 @@ exports.gc_get_scores = function(req, res){
  */
 exports.save_score = function(req, res){
     var id = scores.Scores.Players.length
+    var gameName = req.params.gameName
     console.log("SCORE: "+req.params.score)
     var players = scores.Scores.Players
     var obj = {
         id : id,
         name : req.params.name,
-        score : req.params.score
+        score : req.params.score,
+        gameName : gameName
     }
     console.log(obj)
     var data = players.push(obj)
@@ -41,12 +45,13 @@ exports.save_score = function(req, res){
 }
 
 /** Get score from file */
-function get_scores(callback){
+function get_scores(cb){
     jsonfile.readFile(file, function(err, obj) {
         console.dir(obj)
-        callback(obj)
         scores = obj
-        console.log("Scores ===============", obj.Scores.Players.length)
+        cb(obj)
+        try{console.log("Scores ===============", obj.Scores.Players.length)}
+        catch(e){}
     })
 }
 

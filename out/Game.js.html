@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: Game.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,70 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: Game.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* global $ */
+
+/**
+ * Game class
+ * @constructor Game
+ * 
+ */
+class Game{
+  constructor(gameName){
+    this.time_now
+    this.timer = new GameTimer()
+    this.scores = new Scores
+    this.gameName = gameName
+  }
 
 
-    <h3> </h3>
+  /** Load the scores from file */
+  load_scores(gameName = 'classic'){
+    this.scores.load_scores(gameName)
+  }
+  
+  
+  /** Save score to file */
+  save_score(){
+    var input_name = $('#name').val()
+    var time = $('#timer').text()
+    var gameName = this.gameName
+    this.scores.save_score(input_name, time, gameName, function(result){
+      console.log(result)
+      $('#modal-').modal("hide")
+    })
+  }
+  
+  
+  /** Game win condition */
+  gameWin(cb){
+    this.timer.timer_stop()
+    console.log('WIN!')
+    this.timer.timer_stop()
+    this.time_now = $('#timer').text()
+    console.log(this.time_now)
+    $('#your_score').html(`Your Score ${this.time_now}`)
+    $('#modal-').modal("show")
+    cb('game won')
+  }
+  
+  gameOver(cb){
+    this.timer.timer_stop()
+    cb("game over")
+  }
 
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+}
+</code></pre>
+        </article>
+    </section>
 
 
 

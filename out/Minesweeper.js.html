@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Minesweeper.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Minesweeper.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * Minesweeper class
  * @constructor Minesweeper
  * 
@@ -31,7 +59,7 @@ class Minesweeper{
       /** Make 2d array */
       make2DArray(cols, rows) {
         var arr = new Array(cols);
-        for (var i = 0; i < arr.length; i++) {
+        for (var i = 0; i &lt; arr.length; i++) {
           arr[i] = new Array(rows);
         }
         return arr;
@@ -41,8 +69,8 @@ class Minesweeper{
     createCells(){
         // this.grid = game.grid
         console.log("Creating cells....")
-      for (var i = 0; i < this.cols; i++) {
-        for (var j = 0; j < this.rows; j++) {
+      for (var i = 0; i &lt; this.cols; i++) {
+        for (var j = 0; j &lt; this.rows; j++) {
           if(this.gameType == 'classic'){
             this.grid[i][j] = new ClassicCell(i, j, this.cellWidth, this.grid, this.cols, this.rows);
           }
@@ -61,15 +89,15 @@ class Minesweeper{
     placeMines(){
       console.log("Placing mines....")
       var options = [];
-      for (var i = 0; i < this.cols; i++) {
-        for (var j = 0; j < this.rows; j++) {
+      for (var i = 0; i &lt; this.cols; i++) {
+        for (var j = 0; j &lt; this.rows; j++) {
           options.push([i, j]);
         }
       }
       
       if(this.gameType == 'colouring'){
-        for (var i = 0; i < this.cols; i++) {
-          for (var j = 0; j < this.rows; j++) {
+        for (var i = 0; i &lt; this.cols; i++) {
+          for (var j = 0; j &lt; this.rows; j++) {
             var num = int(random(0, 5));
             var colour = this.colourArray[num]
             this.grid[i][j].colour = colour
@@ -80,7 +108,7 @@ class Minesweeper{
       }
     
       //make mines in random places
-      for (var n = 0; n < this.mines; n++) {
+      for (var n = 0; n &lt; this.mines; n++) {
         var index = floor(random(options.length));
         var choice = options[index];
         var i = choice[0];
@@ -92,8 +120,8 @@ class Minesweeper{
       }
     
     
-      for (var i = 0; i < this.cols; i++) {
-        for (var j = 0; j < this.rows; j++) {
+      for (var i = 0; i &lt; this.cols; i++) {
+        for (var j = 0; j &lt; this.rows; j++) {
           this.grid[i][j].countMines();
         }
       }
@@ -102,9 +130,9 @@ class Minesweeper{
     /** Double click to reveal solved cells */
     doubleClicked() {
       console.log("doubleClicked")
-      for (var i = 0; i < this.cols; i++) {
-        for (var j = 0; j < this.rows; j++) {
-          if (this.grid[i][j].contains(mouseX, mouseY) && this.grid[i][j].revealed) {
+      for (var i = 0; i &lt; this.cols; i++) {
+        for (var j = 0; j &lt; this.rows; j++) {
+          if (this.grid[i][j].contains(mouseX, mouseY) &amp;&amp; this.grid[i][j].revealed) {
             this.grid[i][j].revealSolved();
           }
         }
@@ -116,8 +144,8 @@ class Minesweeper{
     /** Left click */
     leftClick(){
       if(this.gameType == 'colouring'){
-          for (var i = 0; i < this.cols; i++) {
-            for (var j = 0; j < this.rows; j++) {
+          for (var i = 0; i &lt; this.cols; i++) {
+            for (var j = 0; j &lt; this.rows; j++) {
               if (this.grid[i][j].contains(mouseX, mouseY)) {
                 this.grid[i][j].reveal();
                 console.log(this.grid[i][j].colour)
@@ -127,9 +155,9 @@ class Minesweeper{
       }
         var replaceMine = undefined;
         console.log(this.firstMousePress)
-        for (var i = 0; i < this.cols; i++) {
-            for (var j = 0; j < this.rows; j++) {
-              if (this.grid[i][j].contains(mouseX, mouseY) && !this.grid[i][j].isFlag) {
+        for (var i = 0; i &lt; this.cols; i++) {
+            for (var j = 0; j &lt; this.rows; j++) {
+              if (this.grid[i][j].contains(mouseX, mouseY) &amp;&amp; !this.grid[i][j].isFlag) {
                 this.grid[i][j].reveal();
                 if (this.grid[i][j].mine) {
                   if (this.firstMousePress) {
@@ -158,9 +186,9 @@ class Minesweeper{
     
     /** Right click */
     rightClick(){
-        for (var i = 0; i < this.cols; i++) {
-            for (var j = 0; j < this.rows; j++) {
-              if (this.grid[i][j].contains(mouseX, mouseY) && !this.grid[i][j].revealed) {
+        for (var i = 0; i &lt; this.cols; i++) {
+            for (var j = 0; j &lt; this.rows; j++) {
+              if (this.grid[i][j].contains(mouseX, mouseY) &amp;&amp; !this.grid[i][j].revealed) {
                 this.grid[i][j].makeFlag();
               }
             }
@@ -169,8 +197,8 @@ class Minesweeper{
     
     /** Game over */
     gameOver(){
-        for (var i = 0; i < this.cols; i++) {
-            for (var j = 0; j < this.rows; j++) {
+        for (var i = 0; i &lt; this.cols; i++) {
+            for (var j = 0; j &lt; this.rows; j++) {
                 this.grid[i][j].revealed = true;
             }
         }
@@ -192,8 +220,8 @@ class Minesweeper{
     
     /** render the game board */
     draw(){
-        for(var i = 0; i < this.grid.length; i++) {
-            for(var j = 0; j < this.grid[i].length; j++) {
+        for(var i = 0; i &lt; this.grid.length; i++) {
+            for(var j = 0; j &lt; this.grid[i].length; j++) {
                 // console.log(this.grid[i][j])
                 try{this.grid[i][j].show();}catch(e){}
                 try{this.grid[i][j].flag();}catch(e){console.log(e)}
@@ -207,4 +235,26 @@ class Minesweeper{
     
     
     
-}
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ClassicCell.html">ClassicCell</a></li><li><a href="ColourCell.html">ColourCell</a></li><li><a href="Game.html">Game</a></li><li><a href="GameTimer.html">GameTimer</a></li><li><a href="HexCell.html">HexCell</a></li><li><a href="MineCell.html">MineCell</a></li><li><a href="Minesweeper.html">Minesweeper</a></li><li><a href="Scores.html">Scores</a></li><li><a href="Sketch.html">Sketch</a></li></ul><h3>Global</h3><ul><li><a href="global.html#doubleClicked">doubleClicked</a></li><li><a href="global.html#mousePressed">mousePressed</a></li><li><a href="global.html#new_game">new_game</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Oct 04 2018 07:41:32 GMT+0000 (UTC)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

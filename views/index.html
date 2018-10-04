@@ -8,40 +8,69 @@
     <script type="text/javascript" src="/p5/lib/p5.min.js"></script>
     <script type="text/javascript" src="/p5/lib/addons/p5.dom.min.js"></script>
     <script type="text/javascript" src="/p5/lib/addons/p5.sound.min.js"></script>
-    <!--<script type="text/javascript" src = "/js/main.js"></script>-->
+    <script type="text/javascript" src="/js/Scores.js"></script>
     <script type="text/javascript" src="/js/timer.js"></script>
-    <script type="text/javascript" src="/js/game.js"></script>
-    <script type="text/javascript" src="/js/squaremines.js"></script>
-    <script type="text/javascript" src="/js/hexmines.js"></script>
-    <!--<script type="text/javascript" src="/js/hexmines-test.js"></script>-->
+    <script type="text/javascript" src="/js/Game.js"></script>
+    <script type="text/javascript" src="/js/MineCell.js"></script>
+    <script type="text/javascript" src="/js/ClassicCell.js"></script>
+    <script type="text/javascript" src="/js/ColourCell.js"></script>
+    <script type="text/javascript" src="/js/HexCell.js"></script>
+    <script type="text/javascript" src="/js/Minesweeper.js"></script>
     <script type="text/javascript" src="/js/sketch.js"></script>
-    <script type="text/javascript" src="/js/cell.js"></script>
-    <script type="text/javascript" src="/js/hexCell.js"></script>
     <script type="text/javascript" src="/js/test.js"></script>
     <link rel="stylesheet" href="/stylesheets/style.css" type="text/css" />
   </head>
   <body>
     <div class="grid-container">
       <div class="left-screen">
-        <div id="timer">00:00:00</div>
-        <button onclick="new_gameh(210, 210, 10, 'hex')">Easyh</button>
-        <button onclick="new_gameh(420, 420, 80, 'hex')">Mediumh</button>
-        <button onclick="new_gameh(610, 610, 150, 'hex')">Hardh</button>
-        <button onclick='new_game(201, 201, 10)'>Easy</button>
-        <button onclick='new_game(401, 401, 80)'>Medium</button>
-        <button onclick='new_game(601, 601, 150)'>Hard</button>
         
-        <div id='scores'>
-            
-        </div>
+        <h4>Hex Minesweeper</h4>
+        <button class='btn btn-success' onclick="new_gameh(315, 315, 10, 'hex')">Easy</button>
+        <button class='btn btn-warning' onclick="new_gameh(410, 410, 30, 'hex')">Medium</button>
+        <button class='btn btn-danger' onclick="new_gameh(615, 615, 150, 'hex')">Hard</button>
+        <h4>Classic Minesweeper</h4>
+        <button class='btn btn-success' onclick='new_game(201, 201, 10)'>Easy</button>
+        <button class='btn btn-warning' onclick='new_game(401, 401, 80)'>Medium</button>
+        <button class='btn btn-danger' onclick='new_game(601, 601, 150)'>Hard</button>
+        <h4>Colouring Minesweeper</h4>
+        <button class='btn btn-success' onclick="new_gameC(201, 201, 10, 'colouring')">Easy</button>
+        <button class='btn btn-warning' onclick="new_gameC(401, 401, 10, 'colouring')">Medium</button>
+        <button class='btn btn-danger' onclick="new_gameC(601, 601, 10, 'colouring')">Hard</button>
+        
+
       </div>
       <div class="right-screen">
+          <div>
+    		<table class="table">
+				<thead>
+					<tr>
+						<th>
+							#ID
+						</th>
+						<th>
+							Name
+						</th>
+						<th>
+							Score
+						</th>
+						<th>
+							Game
+						</th>
+					</tr>
+				</thead>
+				<tbody id='scores'>
+				    
+				</tbody>
+			</table>
+        </div>
+          
       </div>
       <div class="game-area">
       </div>
       <div class="bottom-center">
       </div>
       <div class="top-center">
+        <h2 id="timer">00:00:00</h2>
           <h1>Minesweeper!</h1>
         <div id='minesweeper'></div>
       </div>
@@ -51,8 +80,6 @@
     <div class="container-fluid">
     	<div class="row">
     		<div class="col-md-12">
-    			 <!--<a id="modal-btn" href="#modal-" role="button" class="btn" data-toggle="modal">Launch demo modal</a>-->
-    			
     			<div class="modal fade" id="modal-" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     				<div class="modal-dialog" role="document">
     					<div class="modal-content">
@@ -94,95 +121,5 @@
     		</div>
     	</div>
     </div>
-    
-    
-    
-    
   </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.9/p5.min.js"></script>-->
-<!--    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.9/addons/p5.dom.min.js"></script>-->
-<!--    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.9/addons/p5.sound.min.js"></script>-->
-
-
-
-<!--<!doctype html>-->
-<!--<html lang="en" ng-app>-->
-<!--  <head>-->
-<!--    <title>Mine Sweeper</title>-->
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-<!--    <link rel="stylesheet" href="/css/bootstrap.min.css">-->
-<!--    <link rel="stylesheet" href="/css/minesweeper.css">-->
-<!--    <link rel="stylesheet" href="/css/bootstrap-responsive.min.css">-->
-<!--    <script src="/js/jquery.min.js"></script>-->
-<!--    <script src="/js/minesweeper.js"></script>-->
-<!--  </head>-->
-<!--  <body>-->
-    
-<!--    <div id='game'>-->
-<!--      <TABLE ID=sqTable onmouseup="return false">-->
-<!--      <TR>-->
-<!--        <TD CLASS=score COLSPAN=>-->
-<!--      <DIV CLASS=counter ID=mines>&nbsp;</DIV>-->
-<!--      <DIV CLASS=counter ID=timer>&nbsp;</DIV>-->
-<!--      <IMG ID='smiley' SRC="erasing.gif" ALT="onmousedown=return" onclick='clickSmiley(event)'></TD>-->
-<!--      </TR>-->
-      <!--foreach row........-->
-<!--      <TR id='game_row'>-->
-        <!--foreach column....-->
-        <!--<TD CLASS=sq ID='' onmousedown="return clickSq(event,))"></TD>-->
-        <!--end column....-->
-<!--      </TR> -->
-      <!--end row....-->
-<!--        </TABLE>-->
-<!--    </div>-->
-    
-<!--    <script src="/socket.io/socket.io.js"></script>-->
-<!--    <script src="/js/bootstrap.min.js"></script>-->
-<!--    <script src="/js/angular.min.js"></script>-->
-<!--  </body>-->
-<!--</html>-->
-
-
-
-
-   <!--23  <!-- The following HTML is generated by a script.  See ./source.php -->-->
-   <!--24  <TABLE ID=sqTable onmouseup="return false">-->
-   <!--25  <TR><TD CLASS=score COLSPAN=<?php echo $cols?>>-->
-   <!--26  <DIV CLASS=counter ID=mines>&nbsp;</DIV>-->
-   <!--27  <DIV CLASS=counter ID=timer>&nbsp;</DIV>-->
-   <!--28  <IMG ID=smiley SRC="erasing.gif" ALT=""-->
-   <!--29      onmousedown="return clickSmiley(event)">-->
-   <!--30  </TD></TR>-->
-   <!--31  <?php-->
-   <!--32      for ($row = 0; $row < $rows; $row++) { ?>-->
-   <!--33  <TR>-->
-   <!--34  <?php-->
-   <!--35          for ($col = 0; $col < $cols; $col++) { ?>-->
-   <!--36  <TD CLASS=sq ID="sq-<?php echo $row * $cols + $col ?>"-->
-   <!--37    onmousedown="return clickSq(event,<?php echo $row * $cols + $col ?>)"-->
-   <!--38    >&nbsp;</TD>-->
-   <!--39  <?php-->
-   <!--40          } ?>-->
-   <!--41  </TR>-->
-   <!--42  <?php-->
-   <!--43  }-->
-   <!--44  ?>-->
-   <!--45  </TABLE>-->
-

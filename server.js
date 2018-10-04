@@ -35,9 +35,13 @@ var sockets = [];
 //Routes
 app.get('/new_game/:width/:height/:mines', game_controller.new_game)
 
-app.get('/save_score/:name/:score', game_controller.save_score)
+app.get('/save_score/:name/:score/:gameName', game_controller.save_score)
 
-app.get('/get_scores', game_controller.gc_get_scores)
+app.get('/get_scores/:gameName', game_controller.gc_get_scores)
+
+app.get('/test', function(req, res){
+   res.sendfile(path.resolve(__dirname, 'views/js/tests/index.html'));
+})
 
 // app.get('/get_data', routes.get_data)
 
