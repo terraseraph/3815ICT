@@ -15,13 +15,37 @@ class ColourCell extends MineCell {
     this.rows = rows
     this.grid = grid
     console.log("Colour cell!!!")
+    this.colourArray = ["#FF0000", "#F7FF00", "#00FF08", "#00E0FF", "#000000"]
     this.colour;
+    this.neighbourColours = []
   }
 
   /** Makes the cell shape */
   makeShape(){
         rect(this.x, this.y, this.w, this.w);
     }
+    
+  manipColour(){
+    this.countMines()
+    for(var i = 0;i < this.neighbourCells.length; i++){
+      try{ this.neighbourColours.push(this.neighbourCells[i].colour)}catch(e){}
+    }
+    var index
+    
+    if(this.neighbourColours.includes(this.colour)){
+      for (var i=0; i<this.neighbourColours.length; i++) {
+          index = this.colourArray.indexOf(this.neighbourColours[i]);
+          if (index > -1) {
+              this.colourArray.splice(index, 1);
+        }
+      }
+      this.colour = this.colourArray[0]
+    }
+    var num = int(random(100));
+    if(num > 80){
+     this.colour = this.neighbourColours[0]
+    }  
+  }
 
   
   /** Checks to see if the mouse is within the cells bounds */

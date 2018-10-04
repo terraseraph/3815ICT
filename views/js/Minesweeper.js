@@ -76,6 +76,19 @@ class Minesweeper{
             this.grid[i][j].countMines();
           }
         }
+        for (var i = 0; i < this.cols; i++) {
+          for (var j = 0; j < this.rows; j++) {
+            this.grid[i][j].manipColour();
+          }
+        }
+        // //place violators
+        // for (var i = 0; i < this.mines; i++) {
+        //   for (var j = 0; j < this.mines; j++) {
+        //     var num = int(random(0, 5));
+        //     var colour = this.colourArray[num]
+        //   }
+        // }
+        
         return
       }
     
